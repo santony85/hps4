@@ -1,0 +1,188 @@
+<ion-header>
+  <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-back-button text="Retour"></ion-back-button>
+          </ion-buttons>
+    <ion-title>Nouveau {{txtrdv}}</ion-title>
+  </ion-toolbar>
+</ion-header> 
+
+<ion-content>
+  <div id="map2" style="width: 0%; height: 0%"></div> 
+  <form [formGroup]="validations_form"  (ngSubmit)="onSubmit(validations_form.value)" #loginForm="ngForm">
+    <ion-grid>
+      <ion-row *ngIf="isrdv">
+        
+        <ion-col size="6">
+          <ion-item class="headeritem">
+            <ion-datetime displayFormat="DD/MM/YYYY" type="text" formControlName="dateRdv" placeholder="Date"></ion-datetime>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="6">
+          <ion-item class="headeritem">
+            <ion-datetime displayFormat="HH:mm" type="text" formControlName="heureRDV" placeholder="Heure"></ion-datetime>
+          </ion-item>
+        </ion-col> 
+
+      </ion-row>
+      <ion-row>
+        <ion-col size="2">
+  
+            <ion-select formControlName="gender" cancelText="Annuler" okText="OK"> 
+              <ion-select-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-select-option>
+            </ion-select>
+    
+        </ion-col>
+        <ion-col size="5">
+          <ion-item>
+            <ion-label  color="primary">Nom</ion-label>
+            <ion-input type="text" formControlName="nom"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.nom">
+              <div class="error-message" *ngIf="validations_form.get('nom').hasError(validation.type) && (validations_form.get('nom').dirty || validations_form.get('nom').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+        <ion-col size="5">
+          <ion-item>
+            <ion-label color="primary">Prenom</ion-label>
+            <ion-input type="text" formControlName="prenom"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.prenom">
+              <div class="error-message" *ngIf="validations_form.get('prenom').hasError(validation.type) && (validations_form.get('prenom').dirty || validations_form.get('prenom').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="affAdr">
+        <ion-col size="12">
+        <ion-item>
+          <ion-label color="primary" >Adresse</ion-label>
+          <ionic-selectable
+          item-content
+          formControlName="adresse"
+          itemValueField="id"
+          itemTextField="label"
+          [items]="adresses"
+          [canSearch]="true"
+          (onChange)="portChange($event)"
+          (onSearch)="searchPorts($event)">
+        </ionic-selectable>
+        <ion-buttons slot="end">
+          <ion-button (click)="reverseAdr()">
+            <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        </ion-item>
+      </ion-col>
+      </ion-row>
+      <ion-input type="hidden" readonly formControlName="autoCompleteCli"></ion-input>
+      <ion-row>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label color="primary">Num.</ion-label>
+            <ion-input type="text" readonly formControlName="num"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="10">
+          <ion-item>
+            <ion-label color="primary">Rue</ion-label>
+            <ion-input type="text" readonly formControlName="rue"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>    
+      <ion-row>
+        <ion-col size="2">
+          <ion-item>
+            <ion-label  color="primary">CP</ion-label>
+            <ion-input type="text" readonly formControlName="cp"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="6">
+          <ion-item>
+            <ion-label  color="primary">Ville</ion-label>
+            <ion-input type="text" readonly formControlName="ville"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="4">
+
+          <ion-item>
+            <ion-label color="primary">Tel.</ion-label>
+            <ion-input type="text" formControlName="tel"></ion-input>
+          </ion-item>
+          <div class="validation-errors">
+            <ng-container *ngFor="let validation of validation_messages.tel">
+              <div class="error-message" *ngIf="validations_form.get('tel').hasError(validation.type) && (validations_form.get('tel').dirty || validations_form.get('tel').touched)">
+                <ion-icon name="information-circle-outline"></ion-icon> {{ validation.message }}
+              </div>
+            </ng-container>
+          </div>
+
+        </ion-col>
+      </ion-row> 
+
+      <ion-row>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label color="primary">Age Mr</ion-label>
+            <ion-input type="text" formControlName="tranchemr"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label color="primary">Age Mme</ion-label>
+            <ion-input type="text" formControlName="tranchemme"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label color="primary">An. co.</ion-label>
+            <ion-input type="text" formControlName="anneeConstr"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item>
+            <ion-label color="primary">Nb oc.</ion-label>
+            <ion-input type="text" formControlName="nboccupants"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+        <ion-item>
+          <ion-textarea readonly formControlName="comTele" placeholder="Commentaire correspondant"></ion-textarea>
+        </ion-item>
+        </ion-col>
+      </ion-row>  
+      <ion-row>
+        <ion-col size="12">
+        <ion-item>
+          <ion-textarea formControlName="rapport" placeholder="Mon commentaire..."></ion-textarea>
+        </ion-item>
+        </ion-col>
+      </ion-row>  
+
+
+
+
+    </ion-grid>   
+    <ion-input type="hidden" readonly formControlName="lat"></ion-input>
+    <ion-input type="hidden" readonly formControlName="long"></ion-input> 
+    
+  </form>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-button color="primary" class="submit-btn" expand="full" shape="round" (click)="loginForm.ngSubmit.emit()" [disabled]="!validations_form.valid">Envoyer</ion-button>
+  </ion-toolbar>
+</ion-footer>

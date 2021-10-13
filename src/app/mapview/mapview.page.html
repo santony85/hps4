@@ -1,0 +1,36 @@
+<ion-header>
+
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="largemenuitem">
+      <div style="font-size: 20px;margin-top: 1px;">Ma carte</div>
+      <div style="font-size: 12px;color: darkgray;">Derniere synchronisation {{globalservice.formatdateByNbjour(maj)}}</div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <!--<ion-button (click)="synchro()">Mettre a jour</ion-button>-->
+    </ion-buttons>
+  </ion-toolbar>
+  
+  <ion-segment 
+    (ionChange)="segmentChanged($event)"
+    [(ngModel)]="segmentModel" 
+    style="height:64px;background: lightgrey;">
+    <ion-segment-button value="rdv">
+      <ion-label>Rdv <h5>({{nrdv}})</h5></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="client">
+      <ion-label>Clients<h5>({{nclient}})</h5></ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="tous">
+      <ion-label>Tous<h5>({{nclient+nrdv}})</h5></ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="mapId" style="width: 100%; height: 100%"></div>
+</ion-content>

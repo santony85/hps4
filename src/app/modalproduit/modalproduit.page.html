@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismiss()">Annuler</ion-button>
+    </ion-buttons>
+    <ion-title>Modalproduit</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label position="stacked" color="primary">Quantité</ion-label>
+        <ion-input  type="text" [(ngModel)]="qte"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label position="stacked" color="primary">Famille</ion-label>
+        <ion-select cancelText="Annuler" okText="OK" (ionChange)="changeFam($event)"> 
+          <ion-select-option *ngFor="let famille of familles" [value]="famille">{{famille}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <ion-row>
+    <ion-col size="12">
+      <ion-item>
+        <ion-label position="stacked" color="primary">Produits</ion-label>
+        <ion-list class="mlist" lines="none">
+          <ion-item *ngFor="let prod of produits" class="prodlist" (click)="setProd(prod)">
+            <ion-checkbox [(ngModel)]="prod.checked"></ion-checkbox>
+            {{prod.code}}
+          </ion-item>
+        </ion-list>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-button expand="block"  (click)="close()">Selectionner</ion-button>
+  </ion-toolbar>
+</ion-footer>

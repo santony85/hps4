@@ -1,5 +1,7 @@
 {
   "name": "hps4",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

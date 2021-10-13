@@ -1,0 +1,105 @@
+<ion-header>
+
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="largemenuitem">
+      <div style="font-size: 20px;margin-top: 1px;">Mes Rapports</div>
+      <div style="font-size: 12px;color: darkgray;">{{nbRapport}} rapports trouvés - Derniere synchronisation {{globalservice.formatdateByNbjour(maj)}}</div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="synchro()">Mettre a jour</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-row style="background: white;">
+    <ion-col size="12">
+      <div class="headerrecherche">
+        <ion-row>
+          <ion-col size="1">
+            <ion-item >
+              <ion-input type="button" style="height: 73px;" (click)="setToday()">
+                <ion-icon name="today"  style="font-size: 4rem;color:#3880ff;"></ion-icon>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+          <ion-item>
+            <ion-label color="primary">Nom</ion-label>
+            <ion-input type="text" style="height: 73px;" (keyup.enter)='onChangeNom($event.target.value,"nom")' [(ngModel)]="fnom"></ion-input>
+          </ion-item>
+          </ion-col>
+
+            <!--<ion-col size="1">
+              <ion-item style="--background:#3880ff;">
+                <ion-input type="button" style="height: 73px;">
+                  <ion-icon name="eye"  style="font-size: 4rem;color:white;"></ion-icon>
+                </ion-input>
+              </ion-item>
+              </ion-col>  -->
+              <ion-col size="3">
+                <ion-item class="headeritemXX">
+                  <ion-label color="primary">Du</ion-label>
+                  <ion-datetime style="height: 73px;" displayFormat="DD/MM/YYYY" type="text" [(ngModel)]="d1" ></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col size="3">
+                <ion-item class="headeritemXX">
+                  <ion-label color="primary">Au</ion-label>
+                  <ion-datetime style="height: 73px;" displayFormat="DD/MM/YYYY" type="text" [(ngModel)]="d2"></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col size="1">
+                <ion-item >
+                  <ion-input type="button" style="height: 73px;">
+                    <ion-icon name="search"  style="font-size: 4rem;color:#3880ff;" (click)="getDateRapport()"></ion-icon>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+        </ion-row>  
+      </div>
+
+    </ion-col>
+  </ion-row>
+
+</ion-header>
+
+<ion-content>
+
+  <ion-grid>
+
+    <ion-row>
+      <ion-col *ngFor="let item of rapports" size="4">
+
+  
+        <ion-card>
+
+          <ion-card-header color="light" [ngStyle]="{'background-color': item.color}" >
+            <ion-card-title class="cardfooter">Le {{globalservice.formatDate(item.dateRdv)}} à {{item.heureRDV}}
+            </ion-card-title> 
+            <ion-badge class="center-right">J+{{item.dateDiff}}</ion-badge>
+
+          </ion-card-header>
+  
+          <ion-card-content (click)="affRdv(item)">
+            <p>&nbsp;</p>
+            <p>{{ item.source }} <b>{{ item.prenom }} {{ item.nom }}</b></p>
+            <p>{{ item.numAdr }} {{ item.rue }}</p>
+            <p>{{ item.cp }} <b>{{ item.ville }}</b></p>
+            <p>Tel : <b>{{ item.tel }}</b></p>
+
+            <p>&nbsp;</p>
+            <p class="cardfooter">{{item.issue}}</p>
+
+          </ion-card-content>
+  
+        </ion-card>
+  
+  
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="largemenuitem">
+      <div style="font-size: 20px;margin-top: 1px;">Mon equipe</div>
+      <div style="font-size: 12px;color: darkgray;">{{nbrapport}} rapports trouvés</div>
+    </ion-title>
+    <ion-buttons slot="end">
+      <!--<ion-button (click)="synchro()">Mettre a jour</ion-button>-->
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-row style="background: white;">
+    <ion-col size="12">
+      <div class="headerrecherche">
+        <ion-row>
+          <ion-col size="1">
+            <ion-item >
+              <ion-input type="button" style="height: 73px;" (click)="setToday()">
+                <ion-icon name="today"  style="font-size: 4rem;color:#3880ff;"></ion-icon>
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col size="4">
+          <ion-item>
+            <ion-select cancelText="Annuler" okText="OK" (ionChange)="onChange($event)" placeholder="Commercial"> 
+              <ion-select-option *ngFor="let item of equipe" [value]="item._id">{{item.nom}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          </ion-col>
+
+              <ion-col size="3">
+                <ion-item class="headeritemXX">
+                  <ion-label color="primary">Du</ion-label>
+                  <ion-datetime style="height: 73px;" displayFormat="DD/MM/YYYY" type="text" [(ngModel)]="d1" ></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col size="3">
+                <ion-item class="headeritemXX">
+                  <ion-label color="primary">Au</ion-label>
+                  <ion-datetime style="height: 73px;" displayFormat="DD/MM/YYYY" type="text" [(ngModel)]="d2"></ion-datetime>
+                </ion-item>
+              </ion-col>
+              <ion-col size="1">
+                <ion-item >
+                  <ion-input type="button" style="height: 73px;">
+                    <ion-icon name="search"  style="font-size: 4rem;color:#3880ff;" (click)="getDateRapport()"></ion-icon>
+                  </ion-input>
+                </ion-item>
+              </ion-col>
+        </ion-row>  
+      </div>
+
+    </ion-col>
+  </ion-row>
+
+
+</ion-header>
+
+
+
+<ion-content>
+  <ion-row *ngFor="let item of rapports" [ngStyle]="{'--background': globalservice.getColor(item.color)}">
+    <ion-item class="ion-item-small" >
+      <ion-col size="1.3" >{{globalservice.formatDate(item.dateRdv)}}</ion-col>
+      <ion-col size="1">{{item.heureRDV}}</ion-col> 
+      <ion-col size="2"><b>{{item.nom.toUpperCase()}}</b></ion-col>
+      <ion-col size="2">{{item.origine}}</ion-col>
+      <ion-col size="2">{{item.issuerdv?item.issuerdv:"N.C"}}</ion-col>
+      <ion-col size="2">{{item.issue}}</ion-col>
+      <ion-col size="2"><b>{{item.montant}}</b></ion-col>
+    
+  </ion-item>  
+  </ion-row>
+
+</ion-content>

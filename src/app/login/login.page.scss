@@ -1,0 +1,100 @@
+
+ion-content {
+    --overflow: hidden;
+    --background: lavenderblush;
+    --background: #fff url('../../assets/images/bkg-profil.png') no-repeat center center / cover;
+}
+
+    .logo-row {
+      padding-top: 20px;
+      padding-bottom: 20px;
+    }
+    .text-login{
+       float:left;
+       font-weight:bold; 
+       font-size:16px; 
+       color:#9B9B9B;
+    }
+
+    .login-box {
+      background: rgba(255, 255, 255, 0.609);
+      padding: 20px;
+      margin-left:auto;
+      margin-right:auto;
+      margin-top:7%;
+      width:700px;
+      border-radius:10px;
+      box-shadow:0 20px 20px rgba(0,0,0,0.1);
+      
+    }
+
+    ion-row {
+      align-items: center;
+      text-align: center;
+      margin:0;
+      padding:0;
+    }
+    ion-col {
+      margin:0;
+      padding:0;
+    }
+
+    ion-item {
+      border-radius: 30px !important;
+      padding-left: 10px !important;
+      font-size: 0.9em;
+      margin-bottom: 10px;
+      border: 1px solid #ffffff;
+      border-bottom: 0px !important;
+      box-shadow: none !important;
+      background: white;
+    }
+
+    .signup-col {
+      margin: 0;
+      padding-bottom: 0;
+    }
+
+    .item-inner {
+      border-bottom-color: #ffffff !important;
+      box-shadow: none !important;
+      opacity: 1 !important;
+    }
+
+    .submit-btn {
+      background: #0B74C0;
+      border-radius: 30px !important;
+      border:none;
+      color:white;
+      font-weight: bold;
+      height:44px;
+      box-shadow: 5px 10px 20px rgba(11,116,192,0.2);
+      width:330px;
+      font-size: 16px;
+      margin-left:auto;
+      margin-right:auto;
+      opacity: 1!important;
+    }
+
+    .register-btn {
+      color: #9B9B9B;
+      font-size: 13px;
+      height:44px;
+      margin-top:10px;
+      width: 240px;
+      border-bottom:1px solid #CDCED2;
+      margin-left:auto;
+      margin-right:auto;
+      border-radius:0;
+      opacity: 1!important;
+    }
+
+    .HC-btn {
+      border-radius:20px;
+      width: 330px;
+      margin-left:auto;
+      margin-right:auto;
+      opacity: 1!important;
+      box-shadow: 5px 10px 20px rgba(11,116,192,0.2);
+    }
+

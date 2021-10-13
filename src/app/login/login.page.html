@@ -1,0 +1,46 @@
+
+<ion-header>
+
+
+</ion-header>
+
+<ion-content class="login-content" scroll="true" overflow-scroll=true>
+  
+  <div class="login-box" text-center>
+    <ion-row>
+
+      <ion-col col-5.5>
+        <img src="assets/images/logojb.png" width="180px"/>
+      </ion-col>
+
+      <ion-col col-6.5>
+
+        <form class="login-form auth-form" (ngSubmit)="login()" #registerForm="ngForm" [formGroup]="loginFG" >
+            <ion-item>
+                  <ion-label text-left class="text-login">E-mail :</ion-label>
+                  <ion-input type="email" placeholder="abc@exemple.com" formControlName="email" [(ngModel)]="registerCredentials.email"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                  <ion-label text-left class="text-login">Mot de passe :</ion-label>
+                  <ion-input type="password" formControlName="password" placeholder="************" value="" [(ngModel)]="registerCredentials.mdp"  show-hide-input></ion-input>
+              </ion-item>
+
+        <ion-row text-center>
+          <p *ngIf="ispwdok" style="color: red;font-size: 22px;">Login ou mot de passe incorrect</p>
+          <ion-col class="signup-col">
+            <button ion-button style="padding:0;" class="submit-btn general-green-bk" full type="submit" [disabled]="!registerForm.form.valid">Se connecter</button>
+            <!--<button ion-button class="register-btn" block clear (click)="createAccount()">Mot de passe oublié</button>-->
+            <!--<button ion-button class="change-btn" block clear (click)="createAccount()">Changer de mot de passe</button>-->
+          </ion-col>
+        </ion-row>
+
+
+      </form>
+    </ion-col>
+
+
+
+    </ion-row>
+  </div>
+</ion-content>

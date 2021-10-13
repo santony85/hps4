@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="largemenuitem">Agenda</ion-title>
+   
+    <ion-buttons slot="end">
+      <ion-button (click)="synchro()">Mettre a jour</ion-button>
+      <ion-button (click)="presentCheckboxNew()">
+        Nouveau
+      </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content  [fullscreen]="true" >
+  
+<!--<div slot="fixed" style="height: 100%; width: 100%;">-->
+    <full-calendar 
+    *ngIf="calendarOptions"
+  #fullcalendar
+  [options]="calendarOptions"
+></full-calendar>
+      <!--<iframe  height="100%" width="100%" [src]="url" name="iframe_a"></iframe>-->
+  <!--</div>-->
+</ion-content>

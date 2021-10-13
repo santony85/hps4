@@ -1,3 +1,30 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-menu side="start" menuId="first" contentId="content1">
+      <ion-content>
+        <ion-row>
+          <ion-col width-100 text-center style="    margin: 5px !important;
+          border: none;
+          margin-left: 50px !important;
+          margin-bottom: 20px !important;">
+            <img src="assets/images/logojb.png" width="200px"/>
+          </ion-col>
+        </ion-row>
+
+        <ion-list *ngFor="let pages of navigate" lines="none">
+        <ion-menu-toggle auto-hide="true">
+          <ion-item button class="item-menu" [routerLink]="pages.url" routerDirection="forward">
+              <ion-icon [name]="pages.icon" slot="start"></ion-icon>
+                 {{pages.title}} 
+          </ion-item>
+        </ion-menu-toggle>
+        </ion-list>
+
+      <div style="position: absolute;
+      bottom: 5px;
+      left: 10px;">
+        Version : {{vernum}}
+      </div>
+      </ion-content>
+    </ion-menu>
+<ion-router-outlet id="content1"></ion-router-outlet>
 </ion-app>

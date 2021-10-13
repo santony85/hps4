@@ -1,20 +1,75 @@
-<ion-header [translucent]="true">
+<ion-header>
+
+
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="largemenuitem">
+      <div style="font-size: 20px;margin-top: 1px;">Rendez-vous du jour</div>
+      <div style="font-size: 12px;color: darkgray;">Derniere synchronisation {{globalservice.formatdateByNbjour(maj)}}</div>
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="synchro()">Mettre a jour</ion-button>
+      <ion-button (click)="presentCheckboxNew()">
+        Nouveau
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
+  
+  <ion-segment 
+    (ionChange)="segmentChanged($event)"
+    [(ngModel)]="segmentModel" 
+    style="height:64px;background: lightgrey;">
+    <ion-segment-button value="rdv">
+      <ion-label>Rdv<h5>({{nrdv}})</h5></ion-label>
+    </ion-segment-button>
+<!--
+    <ion-segment-button value="j1">
+      <ion-label>A confirmer<h5>({{naconf}})</h5></ion-label>
+    </ion-segment-button>
+  -->
+    <!--<ion-segment-button value="contact">
+      <ion-label>Contact<h5>({{ncontact}})</h5></ion-label>
+    </ion-segment-button>-->
+    <ion-segment-button value="retard">
+      <ion-label>Retards<h5>({{nretard}})</h5></ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+<ion-content [fullscreen]="true">
+
+  <ion-row>
+    <ion-col *ngFor="let item of rdv" size="4" >
+
+      <ion-card>
+
+        <ion-card-header color="light" [ngStyle]="{'background-color': globalservice.getColor(item.color)}" >
+          <ion-card-title class="cardfooter">Le {{globalservice.formatDate(item.dateRdv)}} à {{item.heureRDV}}
+          </ion-card-title> 
+          <ion-badge *ngIf="affBadge && item.dateDiff > 0" class="center-right">J+{{item.dateDiff}}</ion-badge>
+          <ion-badge *ngIf="affBadge && item.dateDiff < 0" class="center-right">J{{item.dateDiff}}</ion-badge>
+        </ion-card-header>
+
+        <ion-card-content (click)="affRdv(item)">
+          <p>&nbsp;</p>
+          <p>{{ item.source }} <b>{{ item.prenom }} {{ item.nom }}</b></p>
+          <p>{{ item.numAdr }} {{ item.rue }}</p>
+          <p>{{ item.cp }} <b>{{ item.ville }}</b></p>
+          <p>Tel : <b>{{ item.tel }}</b></p>
+          <!--<div>
+            <p>&nbsp;</p>
+            <p class="cardfooter">{{item.issuerdv}}</p>
+          </div>-->
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
+  
 </ion-content>
