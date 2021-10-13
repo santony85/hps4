@@ -211,7 +211,7 @@ export class FormrapportPage implements OnInit {
     if (event.detail.value == "VENTE") {
       this.affVente = 1;
       this.affRepo = 0;
-    } else if (event.detail.value == "REPOSITIONNER") {
+    } else if (event.detail.value == "RELANCE") {
       this.affVente = 0;
       this.affRepo = 1;
     } else {
