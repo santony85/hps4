@@ -235,7 +235,9 @@ export class FormrapportPage implements OnInit {
       if (res.data.prod !== null) {
         let mprod = res.data.prod;
         mprod.qte = res.data.qte;
+        mprod.prix = res.data.prix;
         this.listprod.push(mprod);
+        mprod.array.forEach((element) => {});
         //console.log(this.listprod)
       }
     });

@@ -74,15 +74,15 @@ export class AppComponent {
         url: "/listerapport",
         icon: "clipboard",
       },
-      {
+      /*{
         title: "Mes evenements",
         url: "/evenement",
         icon: "clipboard",
-      },
+      },*/
       {
-        title: "Mes reports",
+        title: "Mes relances",
         url: "/repos",
-        icon: "clipboard",
+        icon: "mail",
       },
       {
         title: "Deconnexion",

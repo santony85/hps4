@@ -40,30 +40,9 @@ export class HomePage {
   ionViewWillEnter() {
     this.menuCtrl.swipeGesture(false);
     this.menuCtrl.enable(true);
-
-    this.synchro();
-
     this.globalservice.loadUser();
 
-    this.globalservice.getRdv().then((datax) => {
-      this.globalservice.getNbRdv().then((data) => {
-        //console.log(data["data"])
-
-        this.rdv = data["data"];
-        this.maj = data["maj"];
-
-        var now = new Date().getTime();
-        var theDate = new Date(this.maj).getTime();
-        const oneday = 60 * 60 * 24 * 1000;
-
-        var cmpDate = now - theDate > oneday;
-        if (cmpDate) alert("Votre dernière synchronisation à plus de 24h.");
-
-        //console.log(cmpDate)
-      });
-      this.countNbAction();
-      this.segmentModel = "rdv";
-    });
+    this.synchro();
   }
 
   countNbAction() {
@@ -104,6 +83,27 @@ export class HomePage {
           env.countNbAction();
           loading.dismiss();
           alert.present();
+
+          env.globalservice.getRdv().then((datax) => {
+            env.globalservice.getNbRdv().then((data) => {
+              //console.log(data["data"])
+
+              env.rdv = data["data"];
+              env.maj = data["maj"];
+
+              var now = new Date().getTime();
+              var theDate = new Date(env.maj).getTime();
+              const oneday = 60 * 60 * 24 * 1000;
+
+              var cmpDate = now - theDate > oneday;
+              if (cmpDate)
+                alert("Votre dernière synchronisation à plus de 24h.");
+
+              //console.log(cmpDate)
+            });
+            env.countNbAction();
+            env.segmentModel = "rdv";
+          });
         });
       });
     });
