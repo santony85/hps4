@@ -1,52 +1,84 @@
-ion-item{
-    /*margin: 1rem;*/
-    border: 1px solid gray;
-    border-radius: 10px;
-    --background: #efefef;
+ion-item {
+  /*margin: 1rem;*/
+  border: 1px solid gray;
+  border-radius: 10px;
+  --background: #efefef;
+}
+ion-content {
+  --background: linear-gradient(#ffffff3b, #ffffffd6);
+  background-color: #add8e6d1;
+}
+.largeitem {
+  height: 70px;
+  --background: white;
+}
+.headeritem {
+  --background: cornflowerblue;
+}
+.qte {
+  width: 5.8rem;
+}
+.ref {
+  width: 9rem;
+  margin-top: 0.5rem;
+}
+.prix {
+  width: 9rem;
+  margin-top: 0.5rem;
+  padding-left: 2rem;
+}
+.ddes {
+  width: 34rem;
+  margin-left: 1rem;
+}
+.des {
+  font-weight: 600;
+  margin-top: 1.3rem;
+  color: darkslateblue;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+ion-select {
+  border: 1px solid gray;
+  border-radius: 10px;
+  background: lightgrey;
+  height: 45px;
+}
+.validation-errors {
+  color: red;
+}
 
+.fc-icon {
+  display: inline-block;
+  font-family: fcicons !important;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: 400;
+  height: 1em;
+  line-height: 1;
+  text-align: center;
+  text-transform: none;
+  user-select: none;
+  width: 1em;
 }
-ion-content{
-    --background: linear-gradient(#ffffff3b, #ffffffd6);
-    background-color: #add8e6d1;
-}
-.largeitem{
-    height: 70px;
-    --background: white;
-}
-.headeritem{
-    --background: cornflowerblue;
-}
-.qte{
-    width: 5.8rem;
-}
-.ref{
-    width: 9rem;
-    margin-top: 0.5rem;
-}
-.prix{
-    width: 9rem;
-    margin-top: 0.5rem;
-    padding-left: 2rem;
-}
-.ddes{
-    width: 34rem;
-    margin-left: 1rem;
 
+.fc-button-primary {
+  background-color: #2c3e50;
+  background-color: var(--fc-button-bg-color, #2c3e50);
+  border-color: #2c3e50;
+  border-color: var(--fc-button-border-color, #2c3e50);
+  color: #fff;
+  color: var(--fc-button-text-color, #fff);
 }
-.des{
-    font-weight: 600;
-    margin-top: 1.3rem;
-    color: darkslateblue;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-ion-select{
-    border: 1px solid gray;
-    border-radius: 10px;
-    background: lightgrey;
-    height: 45px;
-}
-.validation-errors{
-    color:red;
+.fc-button {
+  border: 1px solid transparent;
+  border-radius: 0.25em;
+  display: inline-block;
+  font-size: 1.5em;
+  font-weight: 400;
+  line-height: 1.5;
+  padding: 0.4em 0.65em;
+  text-align: center;
+  vertical-align: middle;
 }

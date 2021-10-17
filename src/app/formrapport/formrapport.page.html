@@ -206,11 +206,29 @@
 
       <ion-row *ngIf="affRepo">
         <ion-col size="12">
-          <ion-select cancelText="Annuler" okText="OK" (ionChange)="onChangeRepo($event)">
+
+          <!--<ion-select cancelText="Annuler" okText="OK" (ionChange)="onChangeRepo($event)">
             <ion-select-option *ngFor="let gender of repos" [value]="gender.id">
               {{gender.name}}
             </ion-select-option>
-          </ion-select>
+          </ion-select>-->
+
+      <ion-row style="    border: 1px solid gray;
+    border-radius: 10px;
+    background: #efefef !important;">
+      <ion-col size="1">
+        <button class="fc-prev-button fc-button fc-button-primary" (click)="decm()" type="button">
+          <ion-icon name="arrow-back"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col size="10"><ion-title class="largemenuitem" style="font-size: 2rem;">{{textMounth}}</ion-title></ion-col>
+      <ion-col size="1" (click)="incm()">
+          <button class="fc-prev-button fc-button fc-button-primary"  type="button">
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+
         </ion-col>
       </ion-row>
 

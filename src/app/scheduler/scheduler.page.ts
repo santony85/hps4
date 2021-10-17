@@ -21,7 +21,7 @@ export class SchedulerPage implements OnInit {
   calendarOptions: CalendarOptions;
   eventsModel: any;
   @ViewChild("fullcalendar") fullcalendar: FullCalendarComponent;
-
+  user: any;
   constructor(
     private sanitize: DomSanitizer,
     public loadingController: LoadingController,
@@ -30,13 +30,16 @@ export class SchedulerPage implements OnInit {
     private http: HttpClient,
     private router: Router,
     public globalservice: GlobalService
-  ) {}
+  ) {
+    this.user = this.globalservice.getUser();
+  }
   ngOnInit() {}
 
   ionViewDidEnter() {
+    console.log(this.user);
     forwardRef(() => Calendar);
     let env = this;
-    var murl = "https://hps-crm.fr/restobj/6033e76872167861bc7ca8c0/rdv";
+    var murl = "https://hps-crm.fr/restobj/" + this.user._id + "/rdv";
     this.http.get(murl).subscribe((results2) => {
       env.calendarOptions = {
         plugins: [dayGridPlugin, interactionPlugin],
@@ -81,7 +84,7 @@ export class SchedulerPage implements OnInit {
         },
         eventDrop: function (info) {
           var myobj = info.event._def.extendedProps;
-          //ajaxput(myobj,info,"");
+          // ajaxput(myobj,info,"");
         },
         eventAllow: function (dropInfo, draggedEvent) {
           if (draggedEvent._instance) {
@@ -96,10 +99,6 @@ export class SchedulerPage implements OnInit {
         },
       };
     });
-
-    /*this.url = this.sanitize.bypassSecurityTrustResourceUrl(
-      "http://176.31.154.73:91/calendarframeapp/6033e76872167861bc7ca8c0/contact/a"
-    );*/
   }
 
   async synchro() {
@@ -115,15 +114,15 @@ export class SchedulerPage implements OnInit {
       message: "Synchronisation...",
     });
     await loading.present();
-    //this.storage.set('rdv', []);
+    // this.storage.set('rdv', []);
     env.globalservice.updateRdvAll(function (data) {
       env.globalservice.loadRdv().then((datax) => {
-        //env.segmentModel = "rdv";
-        //env.affBadge=0;
+        // env.segmentModel = "rdv";
+        // env.affBadge=0;
         env.globalservice.getNbRdv().then((data) => {
-          //env.rdv=data["data"];
-          //env.maj= data["maj"];
-          //env.countNbAction();
+          // env.rdv=data["data"];
+          // env.maj= data["maj"];
+          // env.countNbAction();
           loading.dismiss();
           alert.present();
         });
@@ -162,7 +161,7 @@ export class SchedulerPage implements OnInit {
           role: "cancel",
           cssClass: "secondary",
           handler: () => {
-            //console.log('Confirm Cancel');
+            // console.log('Confirm Cancel');
           },
         },
         {
@@ -178,8 +177,8 @@ export class SchedulerPage implements OnInit {
               };
               this.router.navigate(["/formrdv"], navigationExtras);
             } else {
-              //this.affRdv(null);
-              let navigationExtras: NavigationExtras = {
+              // this.affRdv(null);
+              const navigationExtras: NavigationExtras = {
                 queryParams: {
                   item: JSON.stringify(null),
                   user: JSON.stringify(this.globalservice.getUser()),

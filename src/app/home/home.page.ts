@@ -96,8 +96,6 @@ export class HomePage {
               const oneday = 60 * 60 * 24 * 1000;
 
               var cmpDate = now - theDate > oneday;
-              if (cmpDate)
-                alert("Votre dernière synchronisation à plus de 24h.");
 
               //console.log(cmpDate)
             });

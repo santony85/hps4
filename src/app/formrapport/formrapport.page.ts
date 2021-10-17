@@ -60,6 +60,24 @@ export class FormrapportPage implements OnInit {
     { id: "12", name: "DECEMBRE" },
   ];
 
+  mois = [
+    "JANVIER",
+    "FEVRIER",
+    "MARS",
+    "AVRIL",
+    "MAI",
+    "JUIN",
+    "JUILLET",
+    "AOUT",
+    "SEPTEMBRE",
+    "OCTOBRE",
+    "NOVEMBRE",
+    "DECEMBRE",
+  ];
+
+  dateH: any;
+  textMounth = "Octobre 2021";
+
   mylocate: any = "";
   tmpColor: any = "";
   affVente = 0;
@@ -106,6 +124,11 @@ export class FormrapportPage implements OnInit {
     public loadingController: LoadingController,
     public api: Api
   ) {
+    this.dateH = new Date();
+    this.dateH = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
+    this.textMounth =
+      this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
+
     this.tmpdate =
       this.api.makeDateUs(new Date(), 1) +
       " à " +
@@ -211,17 +234,21 @@ export class FormrapportPage implements OnInit {
     if (event.detail.value == "VENTE") {
       this.affVente = 1;
       this.affRepo = 0;
+      this.validations_form.controls["rapport"].setValidators(null);
+      this.validations_form.controls["rapport"].updateValueAndValidity();
     } else if (event.detail.value == "RELANCE") {
       this.affVente = 0;
       this.affRepo = 1;
+      this.validations_form.controls["rapport"].setValidators([
+        Validators.required,
+      ]);
+      this.validations_form.controls["rapport"].updateValueAndValidity();
     } else {
       this.affVente = 0;
       this.affRepo = 0;
+      this.validations_form.controls["rapport"].setValidators(null);
+      this.validations_form.controls["rapport"].updateValueAndValidity();
     }
-  }
-
-  onChangeRepo(event) {
-    console.log(this.validations_form.controls["rapport"]);
   }
 
   async presentModal() {
@@ -265,7 +292,7 @@ export class FormrapportPage implements OnInit {
       heureRDV: new FormControl(hrrdv),
       date: new FormControl(this.client.date),
       tele: new FormControl(this.client.tele),
-      rapport: new FormControl("", Validators.required),
+      rapport: new FormControl(""),
       comTele: new FormControl(""),
       adresse: new FormControl(
         this.client.autoCompleteCli,
@@ -406,9 +433,14 @@ export class FormrapportPage implements OnInit {
     this.rdv.nbmens = values.nbmens;
 
     this.rdv.civilite = values.gender;
-
-    this.rdv.status = "rapport";
+    if (this.affRepo == 1) {
+      this.rdv.status = "relance";
+      this.rdv.daterelance = this.dateH;
+    } else this.rdv.status = "rapport";
     this.rdv.DateSign = this.rdv.dateRdv;
+
+    //si status == relance
+    //date relance
 
     if (!this.isnew) {
       this.globalservice.updateRdvLocal(this.rdv, function (res) {
@@ -431,7 +463,10 @@ export class FormrapportPage implements OnInit {
       this.rdv.dateRdv = dn;
       this.rdv.heureRDV = this.globalservice.formatHeure(values.heureRDV);
       this.rdv.origine = "rdv";
-      this.rdv.status = "rapport";
+      if (this.affRepo == 1) {
+        this.rdv.status = "relance";
+        this.rdv.daterelance = this.dateH;
+      } else this.rdv.status = "rapport";
       //console.log(this.rdv);
       //addNewRdvLocal
       console.log("par la");
@@ -441,5 +476,34 @@ export class FormrapportPage implements OnInit {
         //});
       });
     }
+  }
+
+  decm() {
+    let tmpd = new Date(this.dateH);
+    tmpd = new Date(tmpd.setMonth(tmpd.getMonth() - 1));
+    let tmpn = new Date();
+
+    tmpn = new Date(tmpn.getFullYear(), tmpn.getMonth(), 1);
+    console.log(tmpn);
+
+    if (tmpd >= tmpn) {
+      this.dateH = tmpd;
+      this.textMounth =
+        this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
+      console.log(this.dateH);
+    }
+
+    //2021-10-12T08:39:38.828Z
+    //var tmp = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
+    //console.log(tmp);
+  }
+  incm() {
+    console.log(this.dateH);
+    this.dateH = new Date(this.dateH.setMonth(this.dateH.getMonth() + 1));
+
+    this.textMounth =
+      this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
+    //var tmp = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
+    //console.log(tmp);
   }
 }
