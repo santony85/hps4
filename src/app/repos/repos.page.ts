@@ -69,7 +69,7 @@ export class ReposPage implements OnInit {
     let env = this;
     var murl = "https://hps-crm.fr/listrelance/" + this.user._id + "/" + txtt;
     this.http.get(murl).subscribe((results2) => {
-      let tar = [];
+      let tar: any = [];
       console.log(results2);
       tar = results2;
       env.nbRdv = tar.length;
@@ -88,7 +88,7 @@ export class ReposPage implements OnInit {
     let env = this;
     var murl = "https://hps-crm.fr/listrelance/" + this.user._id + "/" + txtt;
     this.http.get(murl).subscribe((results2) => {
-      let tar = [];
+      let tar: any = [];
       console.log(results2);
       tar = results2;
       env.nbRdv = tar.length;
