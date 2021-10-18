@@ -434,12 +434,13 @@ export class GlobalService {
       let lstret: any = [];
       this.storage.get("user").then((user) => {
         var murl =
-          "https://hps-crm.fr/finddaterapport/" +
+          "https://hps-crm.fr/listrapportsdate/" +
+          user._id +
+          "/" +
           d1 +
           "/" +
-          d2 +
-          "/" +
-          user._id;
+          d2;
+        console.log(murl);
         this.http.get(murl).subscribe((datas) => {
           var results: any = [];
           results = datas;
@@ -464,9 +465,9 @@ export class GlobalService {
   public getDateRapportListById(d1, d2, idc) {
     return new Promise((resolve) => {
       let lstret: any = [];
-
+      ///listrapportsdate/:idclient/:dated/:datef
       var murl =
-        "https://hps-crm.fr/finddaterapport/" + d1 + "/" + d2 + "/" + idc;
+        "https://hps-crm.fr/finddaterapport/" + idc + "/" + d1 + "/" + d2;
       this.http.get(murl).subscribe((datas) => {
         var results: any = [];
         results = datas;

@@ -34,6 +34,8 @@ export class ReposPage implements OnInit {
 
   dateH: any;
   user: any;
+  nbRdv = 0;
+  rdv: any = [];
 
   constructor(
     private sanitize: DomSanitizer,
@@ -45,13 +47,11 @@ export class ReposPage implements OnInit {
     public globalservice: GlobalService
   ) {
     this.user = this.globalservice.getUser();
+    console.log(this.user._id);
     this.dateH = new Date();
     this.dateH = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
     this.textMounth =
       this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
-
-    var murl = "https://hps-crm.fr/restobj/" + this.user._id + "/rdv";
-    this.http.get(murl).subscribe((results2) => {});
   }
   ngOnInit() {}
 
@@ -61,15 +61,51 @@ export class ReposPage implements OnInit {
     this.dateH = new Date(this.dateH.setMonth(this.dateH.getMonth() - 1));
     this.textMounth =
       this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
-    //2021-10-12T08:39:38.828Z
-    var tmp = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
-    console.log(tmp);
+
+    var m = this.dateH.getMonth() + 1;
+    if (m < 10) m = "0" + m;
+    var txtt = this.dateH.getFullYear() + "-" + m + "-01T23:00:00.000Z";
+    console.log(this.user._id);
+    let env = this;
+    var murl = "https://hps-crm.fr/listrelance/" + this.user._id + "/" + txtt;
+    this.http.get(murl).subscribe((results2) => {
+      let tar = [];
+      console.log(results2);
+      tar = results2;
+      env.nbRdv = tar.length;
+      this.rdv = results2;
+    });
   }
   incm() {
     this.dateH = new Date(this.dateH.setMonth(this.dateH.getMonth() + 1));
     this.textMounth =
       this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
-    var tmp = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
-    console.log(tmp);
+
+    var m = this.dateH.getMonth() + 1;
+    if (m < 10) m = "0" + m;
+    var txtt = this.dateH.getFullYear() + "-" + m + "-01T23:00:00.000Z";
+    console.log(this.user._id);
+    let env = this;
+    var murl = "https://hps-crm.fr/listrelance/" + this.user._id + "/" + txtt;
+    this.http.get(murl).subscribe((results2) => {
+      let tar = [];
+      console.log(results2);
+      tar = results2;
+      env.nbRdv = tar.length;
+      this.rdv = results2;
+    });
+  }
+  affRdv(item) {
+    //if (this.segmentModel == "rdv" || this.segmentModel == "retard") {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        item: JSON.stringify(item),
+        user: JSON.stringify(this.globalservice.getUser()),
+      },
+    };
+    this.router.navigate(["/formrdv"], navigationExtras);
+    /*} else if (this.segmentModel == "j1") {
+      this.presentCheckboxConfirm(item);
+    } else this.presentCheckboxContact(item);*/
   }
 }

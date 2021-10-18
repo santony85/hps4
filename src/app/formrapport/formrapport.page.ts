@@ -432,10 +432,22 @@ export class FormrapportPage implements OnInit {
     this.rdv.mens = values.mens;
     this.rdv.nbmens = values.nbmens;
 
+    this.rdv.rapport = values.rapport;
+
     this.rdv.civilite = values.gender;
     if (this.affRepo == 1) {
       this.rdv.status = "relance";
-      this.rdv.daterelance = this.dateH;
+
+      console.log(this.dateH);
+      var dt = new Date(
+        this.dateH.getFullYear(),
+        this.dateH.getMonth(),
+        2,
+        0,
+        0
+      );
+      console.log(dt);
+      this.rdv.daterelance = dt;
     } else this.rdv.status = "rapport";
     this.rdv.DateSign = this.rdv.dateRdv;
 
@@ -465,7 +477,16 @@ export class FormrapportPage implements OnInit {
       this.rdv.origine = "rdv";
       if (this.affRepo == 1) {
         this.rdv.status = "relance";
-        this.rdv.daterelance = this.dateH;
+        console.log(this.dateH);
+        var dt = new Date(
+          this.dateH.getFullYear(),
+          this.dateH.getMonth(),
+          2,
+          0,
+          0
+        );
+        console.log(dt);
+        this.rdv.daterelance = dt;
       } else this.rdv.status = "rapport";
       //console.log(this.rdv);
       //addNewRdvLocal

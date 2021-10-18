@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import {
   Validators,
   FormBuilder,
@@ -65,11 +60,11 @@ export class FormrdvPage implements OnInit {
     long: "",
     comTele: "",
     issuerdv: "",
-
-    tranchemr:"",
-    tranchemme:"",
-    anneeConstr:"",
-    nboccupants:""
+    issue: "",
+    tranchemr: "",
+    tranchemme: "",
+    anneeConstr: "",
+    nboccupants: "",
   };
 
   genders: Array<string>;
@@ -117,11 +112,11 @@ export class FormrdvPage implements OnInit {
         this.client.long = this.rdv.long;
         this.client.comTele = this.rdv.comTele;
         this.client.issuerdv = this.rdv.issuerdv;
-
-        this.client.tranchemr=this.rdv.tranchemr;
-        this.client.tranchemme=this.rdv.tranchemme;
-        this.client.anneeConstr=this.rdv.anneeConstr;
-        this.client.nboccupants=this.rdv.nboccupants;
+        this.rdv.issue = "";
+        this.client.tranchemr = this.rdv.tranchemr;
+        this.client.tranchemme = this.rdv.tranchemme;
+        this.client.anneeConstr = this.rdv.anneeConstr;
+        this.client.nboccupants = this.rdv.nboccupants;
         /* /ORM */
       } else {
         this.isnew = true;
@@ -133,7 +128,7 @@ export class FormrdvPage implements OnInit {
           this.isrdv = true;
           this.txtrdv = "rendez-vous";
         }
-
+        this.rdv.issue = "";
         this.rdv.dateRdv = "";
         this.rdv.heureRDV = "";
         this.rdv.nom = "";
@@ -150,10 +145,10 @@ export class FormrdvPage implements OnInit {
         this.rdv.comTele = "";
         this.rdv.issuerdv = "";
 
-        this.rdv.tranchemr="";
-        this.rdv.tranchemme="";
-        this.rdv.anneeConstr="";
-        this.rdv.nboccupants="";
+        this.rdv.tranchemr = "";
+        this.rdv.tranchemme = "";
+        this.rdv.anneeConstr = "";
+        this.rdv.nboccupants = "";
 
         this.client.dateRdv = this.rdv.dateRdv;
         this.client.heureRDV = this.rdv.heureRDV;
@@ -172,10 +167,10 @@ export class FormrdvPage implements OnInit {
         this.client.comTele = this.rdv.comTele;
         this.client.issuerdv = this.rdv.issuerdv;
 
-        this.client.tranchemr=this.rdv.tranchemr;
-        this.client.tranchemme=this.rdv.tranchemme;
-        this.client.anneeConstr=this.rdv.anneeConstr;
-        this.client.nboccupants=this.rdv.nboccupants;
+        this.client.tranchemr = this.rdv.tranchemr;
+        this.client.tranchemme = this.rdv.tranchemme;
+        this.client.anneeConstr = this.rdv.anneeConstr;
+        this.client.nboccupants = this.rdv.nboccupants;
 
         this.affAdr = 1;
       }
@@ -365,10 +360,10 @@ export class FormrdvPage implements OnInit {
     this.rdv.comTele = values.comTele;
     this.rdv.civilite = values.gender;
 
-    this.rdv.tranchemr=values.tranchemr;
-    this.rdv.tranchemme=values.tranchemme;
-    this.rdv.anneeConstr=values.anneeConstr;
-    this.rdv.nboccupants=values.nboccupants;
+    this.rdv.tranchemr = values.tranchemr;
+    this.rdv.tranchemme = values.tranchemme;
+    this.rdv.anneeConstr = values.anneeConstr;
+    this.rdv.nboccupants = values.nboccupants;
 
     if (!this.isnew) {
       this.rdv.issuerdv = "CONFIRME";

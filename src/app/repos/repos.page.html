@@ -21,7 +21,7 @@
         </button>
       </ion-col>
       <ion-col size="10"><ion-title class="largemenuitem" style="font-size: 2rem;">{{textMounth}}
-      <ion-badge color="primary">11</ion-badge>
+      <ion-badge color="primary">{{nbRdv}}</ion-badge>
       </ion-title></ion-col>
       <ion-col size="1" (click)="incm()">
           <button class="fc-prev-button fc-button fc-button-primary"  type="button">
@@ -34,5 +34,33 @@
 </ion-header>
 
 <ion-content  [fullscreen]="true" >
+  <ion-row>
+    <ion-col *ngFor="let item of rdv" size="4" >
 
+      <ion-card>
+
+        <ion-card-header color="light" [ngStyle]="{'background-color': globalservice.getColor(item.color)}" >
+          <ion-card-title class="cardfooter">Le {{globalservice.formatDate(item.dateRdv)}} à {{item.heureRDV}}
+          </ion-card-title> 
+          <ion-badge *ngIf="affBadge && item.dateDiff > 0" class="center-right">J+{{item.dateDiff}}</ion-badge>
+          <ion-badge *ngIf="affBadge && item.dateDiff < 0" class="center-right">J{{item.dateDiff}}</ion-badge>
+        </ion-card-header>
+
+        <ion-card-content (click)="affRdv(item)">
+          <p>&nbsp;</p>
+          <p>{{ item.source }} <b>{{ item.prenom }} {{ item.nom }}</b></p>
+          <p>{{ item.numAdr }} {{ item.rue }}</p>
+          <p>{{ item.cp }} <b>{{ item.ville }}</b></p>
+          <p>Tel : <b>{{ item.tel }}</b></p>
+          <p style="font-size: 1.2rem;">{{ item.rapport }}</p>
+          <!--<div>
+            <p>&nbsp;</p>
+            <p class="cardfooter">{{item.issuerdv}}</p>
+          </div>-->
+        </ion-card-content>
+
+      </ion-card>
+
+    </ion-col>
+  </ion-row>
 </ion-content>
