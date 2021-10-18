@@ -277,6 +277,7 @@ export class GlobalService {
   }
   /**************/
   public getNbRapports() {
+    console.log("ici et la");
     return new Promise((resolve) => {
       let lstret: any = [];
       this.getRdv().then((data) => {
@@ -414,15 +415,16 @@ export class GlobalService {
           for (var i = 0; i < results.length; i++) {
             if (results[i].status == "rapport") {
               results[i].dateDiff = Math.abs(results[i].dateDiff);
-              if (results[i].issue == "VENTE") results[i].color = 1;
-              else if (results[i].issue == "REFUS") results[i].color = 5;
-              else results[i].color = 3;
+              //if (results[i].issue == "VENTE") results[i].color = 1;
+              //else if (results[i].issue == "REFUS") results[i].color = 5;
+              //else results[i].color = 3;
             }
           }
           results = results.sort(function (a, b) {
             return a.dateDiff - b.dateDiff;
           });
           this.client = results;
+          //data["data"] = lstret;
           resolve(results);
         });
       });
@@ -447,9 +449,9 @@ export class GlobalService {
           for (var i = 0; i < results.length; i++) {
             if (results[i].status == "rapport") {
               results[i].dateDiff = Math.abs(results[i].dateDiff);
-              if (results[i].issue == "VENTE") results[i].color = 1;
-              else if (results[i].issue == "REFUS") results[i].color = 5;
-              else results[i].color = 3;
+              //if (results[i].issue == "VENTE") results[i].color = 1;
+              //else if (results[i].issue == "REFUS") results[i].color = 5;
+              //else results[i].color = 3;
             }
           }
           results = results.sort(function (a, b) {
