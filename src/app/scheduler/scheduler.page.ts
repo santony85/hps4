@@ -73,7 +73,12 @@ export class SchedulerPage implements OnInit {
 
         droppable: true,
         eventClick: function (info) {
-          console.log(info);
+          console.log("clk");
+
+          let dtn = new Date();
+          let oldt = new Date(info.event._def.extendedProps.dateRdv);
+          // si info.event._def.extendedProps.dateRdv < dtn
+
           let navigationExtras: NavigationExtras = {
             queryParams: {
               item: JSON.stringify(info.event._def.extendedProps),
@@ -81,6 +86,7 @@ export class SchedulerPage implements OnInit {
             },
           };
           env.router.navigate(["/formrapport"], navigationExtras);
+          //fin si
         },
         eventDrop: function (info) {
           var myobj = info.event._def.extendedProps;
@@ -154,6 +160,12 @@ export class SchedulerPage implements OnInit {
           label: "Prospect",
           value: "2",
         },
+        {
+          name: "radio3",
+          type: "radio",
+          label: "Evenement",
+          value: "3",
+        },
       ],
       buttons: [
         {
@@ -167,7 +179,9 @@ export class SchedulerPage implements OnInit {
         {
           text: "Ok",
           handler: (data: string) => {
-            if (data != "2") {
+            if (data == "3") {
+              this.router.navigate(["/evenement"]);
+            } else if (data != "2") {
               let navigationExtras: NavigationExtras = {
                 queryParams: {
                   item: JSON.stringify(null),

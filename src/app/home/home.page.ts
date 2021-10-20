@@ -62,6 +62,7 @@ export class HomePage {
 
   async synchro() {
     let env = this;
+
     const alert = await this.alertCtrl.create({
       header: "Synchronisation",
       message: "Enregistrement effectuée avec succès",
@@ -73,38 +74,39 @@ export class HomePage {
     });
     await loading.present();
     //this.storage.set('rdv', []);
-    env.globalservice.updateRdvAll(function (data) {
-      env.globalservice.loadRdv().then((datax) => {
-        env.segmentModel = "rdv";
-        env.affBadge = 0;
-        env.globalservice.getNbRdv().then((data) => {
-          env.rdv = data["data"];
-          env.maj = data["maj"];
-          env.countNbAction();
-          loading.dismiss();
-          alert.present();
 
-          env.globalservice.getRdv().then((datax) => {
-            env.globalservice.getNbRdv().then((data) => {
-              //console.log(data["data"])
+    //env.globalservice.updateRdvAll(function (data) {
+    env.globalservice.loadRdv().then((datax) => {
+      env.segmentModel = "rdv";
+      env.affBadge = 0;
+      env.globalservice.getNbRdv().then((data) => {
+        env.rdv = data["data"];
+        env.maj = data["maj"];
+        env.countNbAction();
+        loading.dismiss();
+        alert.present();
 
-              env.rdv = data["data"];
-              env.maj = data["maj"];
+        env.globalservice.getRdv().then((datax) => {
+          env.globalservice.getNbRdv().then((data) => {
+            //console.log(data["data"])
 
-              var now = new Date().getTime();
-              var theDate = new Date(env.maj).getTime();
-              const oneday = 60 * 60 * 24 * 1000;
+            env.rdv = data["data"];
+            env.maj = data["maj"];
 
-              var cmpDate = now - theDate > oneday;
+            var now = new Date().getTime();
+            var theDate = new Date(env.maj).getTime();
+            const oneday = 60 * 60 * 24 * 1000;
 
-              //console.log(cmpDate)
-            });
-            env.countNbAction();
-            env.segmentModel = "rdv";
+            var cmpDate = now - theDate > oneday;
+
+            //console.log(cmpDate)
           });
+          env.countNbAction();
+          env.segmentModel = "rdv";
         });
       });
     });
+    //});
   }
 
   tst(item) {
@@ -154,7 +156,9 @@ export class HomePage {
         {
           text: "Ok",
           handler: (data: string) => {
-            if (data != "2") {
+            if (data == "3") {
+              this.router.navigate(["/evenement"]);
+            } else if (data != "2") {
               let navigationExtras: NavigationExtras = {
                 queryParams: {
                   item: JSON.stringify(null),

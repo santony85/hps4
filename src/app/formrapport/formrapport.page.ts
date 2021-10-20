@@ -455,7 +455,7 @@ export class FormrapportPage implements OnInit {
     //date relance
 
     if (!this.isnew) {
-      this.globalservice.updateRdvLocal(this.rdv, function (res) {
+      this.globalservice.updateRdv(this.rdv, function (res) {
         env.router.navigate(["/home"]);
       });
     } else {
@@ -469,7 +469,6 @@ export class FormrapportPage implements OnInit {
       this.rdv.nomcomhps2 = "";
       this.rdv.idcomhps2 = "";
       this.rdv.source = this.rdv.civilite;
-
       // si rdv
       this.rdv.issuerdv = "CONFIRME";
       this.rdv.dateRdv = dn;

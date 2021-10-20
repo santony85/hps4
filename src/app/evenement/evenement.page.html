@@ -1,9 +1,76 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Evenement</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="Retour"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Nouvel evenement</ion-title>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
+<form [formGroup]="loginFG" (ngSubmit)="submitForm(loginFG.value)">
+  <ion-grid>
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+                <ion-item class="headeritemXX">
+                  <ion-label color="primary">Du</ion-label>
+                  <ion-datetime formControlName="start" name="start" style="height: 73px;" displayFormat="DD/MM/YYYY" type="text" required></ion-datetime>
+                </ion-item>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+                <ion-item class="headeritemXX">
+                  <ion-label color="primary">Au</ion-label>
+                  <ion-datetime formControlName="end" name="end" style="height: 73px;" displayFormat="DD/MM/YYYY" type="text"  required></ion-datetime>
+                </ion-item>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+
+        <ion-select  cancelText="Annuler" okText="OK" formControlName="title" 
+            placeholder="Motif" name="title">
+            <ion-select-option *ngFor="let gender of issues" [value]="gender">{{gender}}</ion-select-option>
+          </ion-select>
+
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+
+        <ion-row>
+      <ion-col size="2"></ion-col>  
+      <ion-col size="8">
+
+        <ion-select  cancelText="Annuler" okText="OK" 
+            placeholder="Période" name="periode" formControlName="periode">
+            <ion-select-option *ngFor="let gender of periodes" [value]="gender">{{gender}}</ion-select-option>
+          </ion-select>
+
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+
+
+      <ion-row>
+      <ion-col size="2"></ion-col>
+      <ion-col size="8">
+         <ion-button color="primary" [disabled]="!loginFG.valid" class="submit-btn" expand="full" shape="round" type="submit"
+      >Envoyer</ion-button>
+      </ion-col>
+      <ion-col size="2"></ion-col>
+    </ion-row>
+
+
+  </ion-grid>
+  </form>
 
 </ion-content>

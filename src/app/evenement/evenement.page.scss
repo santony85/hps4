@@ -1,0 +1,81 @@
+#container {
+  text-align: center;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#container strong {
+  font-size: 20px;
+  line-height: 26px;
+}
+
+#container p {
+  font-size: 16px;
+  line-height: 22px;
+
+  color: #8c8c8c;
+
+  margin: 0;
+}
+
+#container a {
+  text-decoration: none;
+}
+
+.cardfooter {
+  --color: black;
+  margin: 0px 0px 4px;
+  padding: 0px;
+  font-size: 16px;
+  font-weight: 900;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+ion-segment-button {
+  font-size: 24px;
+}
+
+.center-right {
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  transform: translateY(-50%);
+}
+ion-content {
+  --background: linear-gradient(#ffffff3b, #ffffffd6);
+  background-color: #add8e6d1;
+}
+.headerrecherche {
+  background: var(
+    --ion-card-background,
+    var(--ion-item-background, var(--ion-background-color, #fff))
+  );
+  border-radius: 8px;
+  font-size: 14px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 4px 16px;
+}
+ion-item {
+  /*margin: 1rem;*/
+  border: 1px solid gray;
+  border-radius: 10px;
+  --background: #efefef;
+  height: 73px !important;
+}
+
+ion-datetime {
+  padding-top: 25px;
+  height: 73px !important;
+}
+
+ion-select {
+  border: 1px solid gray;
+  border-radius: 10px;
+  background: #efefef;
+  height: 73px !important;
+  color: black !important;
+}
