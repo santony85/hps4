@@ -427,13 +427,34 @@ export class GlobalService {
     return new Promise((resolve) => {
       let lstret: any = [];
       this.storage.get("user").then((user) => {
+        var da = new Date(d1);
+        da.setDate(da.getDate() - 1);
+        d1 = new Date(
+          da.getFullYear(),
+          da.getMonth(),
+          da.getDate(),
+          6,
+          0
+        ).toISOString();
+
+        var dt = new Date(d2);
+        dt.setDate(dt.getDate() - 1);
+
+        d2 = new Date(
+          dt.getFullYear(),
+          dt.getMonth(),
+          dt.getDate(),
+          24,
+          0
+        ).toISOString();
         var murl =
           "https://hps-crm.fr/listrapportsdate/" +
           user._id +
           "/" +
           d1 +
           "/" +
-          d2;
+          d2 +
+          "/0";
         console.log(murl);
         this.http.get(murl).subscribe((datas) => {
           var results: any = [];

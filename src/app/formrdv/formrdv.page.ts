@@ -47,6 +47,7 @@ export class FormrdvPage implements OnInit {
   client = {
     dateRdv: "",
     heureRDV: "",
+    source: "",
     nom: "",
     prenom: "",
     autoCompleteCli: "",
@@ -82,14 +83,9 @@ export class FormrdvPage implements OnInit {
     public api: Api,
     private http: HttpClient
   ) {
-    /*this.tmpdate = this.api.makeDateUs(new Date(), 1) + " à " + this.api.makeHour(new Date());
-    this.tmpdatep = this.api.makeDateUs(new Date(), 1) + " à " + this.api.makeHourp(new Date());
-    var mdate = this.api.makeDate(new Date()) + " à " + this.api.makeHour(new Date());
-    this.client.dateRdv = mdate;*/
-
     this.route.queryParams.subscribe((params) => {
       this.user = JSON.parse(params.user);
-      ////console.log(this.user);
+      console.log(this.user);
       if (params.item !== "null") {
         this.rdv = JSON.parse(params.item);
         this.isrdv = true;
@@ -115,6 +111,7 @@ export class FormrdvPage implements OnInit {
         this.client.comTele = this.rdv.comTele;
         this.client.issuerdv = this.rdv.issuerdv;
         this.rdv.issue = "";
+        this.client.source = this.rdv.source;
         this.client.tranchemr = this.rdv.tranchemr;
         this.client.tranchemme = this.rdv.tranchemme;
         this.client.anneeConstr = this.rdv.anneeConstr;
@@ -231,12 +228,12 @@ export class FormrdvPage implements OnInit {
       rapport: new FormControl(""),
       comTele: new FormControl(""),
       adresse: new FormControl(
-        this.client.autoCompleteCli,
-        Validators.required
+        this.client.autoCompleteCli
+        /*Validators.required*/
       ),
       autoCompleteCli: new FormControl(
-        this.client.autoCompleteCli,
-        Validators.required
+        this.client.autoCompleteCli
+        /*Validators.required*/
       ),
       idadr: new FormControl(this.client.idadr),
       num: new FormControl(this.client.num),
@@ -245,10 +242,12 @@ export class FormrdvPage implements OnInit {
       ville: new FormControl(this.client.ville),
       lat: new FormControl(this.client.lat),
       long: new FormControl(this.client.long),
+
       tel: new FormControl(this.client.tel, Validators.required),
       nom: new FormControl(this.client.nom, Validators.required),
       prenom: new FormControl(this.client.prenom, Validators.required),
-      gender: new FormControl(this.genders[0], Validators.required),
+      source: new FormControl(this.genders[0], Validators.required),
+
       issuerdv: new FormControl(""),
       tranchemr: new FormControl(this.client.tranchemr),
       tranchemme: new FormControl(this.client.tranchemme),

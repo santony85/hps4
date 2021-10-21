@@ -115,6 +115,8 @@ export class FormrapportPage implements OnInit {
   issues: Array<string>;
   isEnabled = 0;
   fromPage = "";
+  montant = 0.0;
+
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
@@ -183,6 +185,25 @@ export class FormrapportPage implements OnInit {
         this.client.mens = this.rdv.mens;
         this.client.nbmens = this.rdv.nbmens;
         /* /ORM */
+        console.log(this.rdv.produits);
+        let env = this;
+        if (this.rdv.issue == "VENTE") {
+          this.affVente = 1;
+          this.rdv.produits.forEach((elm) => {
+            console.log(elm);
+            let mprod = elm;
+            mprod.qte = elm.qte;
+            mprod.prix = elm.prix;
+            env.listprod.push(mprod);
+            var prix = parseFloat(elm.prix);
+            var qte = parseInt(elm.qte);
+            this.montant += prix * qte;
+            env.client.montant = env.montant.toFixed(2);
+            /*this.validations_form.controls["montant"].setValue(
+              montant.toFixed(2)
+            );*/
+          });
+        }
       } else {
         this.isnew = true;
         this.affAdr = 1;

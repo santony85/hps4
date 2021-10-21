@@ -79,33 +79,26 @@ export class HomePage {
     env.globalservice.loadRdv().then((datax) => {
       env.segmentModel = "rdv";
       env.affBadge = 0;
-      env.globalservice.getNbRdv().then((data) => {
-        env.rdv = data["data"];
-        env.maj = data["maj"];
+
+      env.globalservice.getRdv().then((dataxx) => {
+        env.globalservice.getNbRdv().then((data) => {
+          //console.log(data["data"])
+          env.rdv = data["data"];
+          env.maj = data["maj"];
+          var now = new Date().getTime();
+          var theDate = new Date(env.maj).getTime();
+          const oneday = 60 * 60 * 24 * 1000;
+          var cmpDate = now - theDate > oneday;
+
+          //console.log(cmpDate)
+        });
         env.countNbAction();
+        env.segmentModel = "rdv";
         loading.dismiss();
         alert.present();
-
-        env.globalservice.getRdv().then((datax) => {
-          env.globalservice.getNbRdv().then((data) => {
-            //console.log(data["data"])
-
-            env.rdv = data["data"];
-            env.maj = data["maj"];
-
-            var now = new Date().getTime();
-            var theDate = new Date(env.maj).getTime();
-            const oneday = 60 * 60 * 24 * 1000;
-
-            var cmpDate = now - theDate > oneday;
-
-            //console.log(cmpDate)
-          });
-          env.countNbAction();
-          env.segmentModel = "rdv";
-        });
       });
     });
+    //});
     //});
   }
 

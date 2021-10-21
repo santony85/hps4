@@ -271,9 +271,17 @@
 
           <ion-row>
             <ion-col size="6" *ngFor="let prod of listprod">
-              <ion-item>
+     
+                <ion-row class="bkligneprod">
+                  <ion-col size="10">
+                    <div class="mfsize"><b>{{prod.qte}}</b> * {{prod.prix}} => {{prod.famille}} <b class="des">{{prod.code}}</b></div></ion-col>
+                  <ion-col size="2">                  <ion-button>
+                    <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+                  </ion-button></ion-col>
+                </ion-row>
+                <!--
                 <div class="ref">
-                  <h4>{{prod.famille}}</h4>
+                  <p>{{prod.famille}}</p>
                 </div>
                 <div class="ddes">
                   <h2 class="des">{{prod.code}}</h2>
@@ -283,7 +291,8 @@
                     <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
                   </ion-button>
                 </ion-buttons>
-              </ion-item>
+              -->
+      
             </ion-col>
 
           </ion-row>

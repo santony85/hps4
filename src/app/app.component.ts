@@ -63,12 +63,12 @@ export class AppComponent {
         title : "Ma carte",
         url   : "/mapview",
         icon  : "map"
-      },*/
+      },
       {
         title: "Mes clients",
         url: "/listeclient",
         icon: "person",
-      },
+      },*/
       {
         title: "Mes rapports",
         url: "/listerapport",
