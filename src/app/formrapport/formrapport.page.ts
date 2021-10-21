@@ -342,7 +342,7 @@ export class FormrapportPage implements OnInit {
       tele: new FormControl(env.client.tele),
       rapport: new FormControl(""),
       comTele: new FormControl(""),
-      adresse: new FormControl(env.client.adresse, Validators.required),
+      adresse: new FormControl(env.client.adresse),
       idadr: new FormControl(env.client.idadr),
       num: new FormControl(env.client.num),
       rue: new FormControl(env.client.rue),
