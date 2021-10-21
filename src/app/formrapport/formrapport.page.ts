@@ -86,7 +86,7 @@ export class FormrapportPage implements OnInit {
   client = {
     dateRdv: "",
     heureRDV: "",
-
+    source: "",
     date: "",
     tele: "",
     nom: "",
@@ -94,7 +94,7 @@ export class FormrapportPage implements OnInit {
     autoCompleteCli: "",
     adresse: "",
     idadr: "",
-    numAdr: "",
+    num: "",
     rue: "",
     cp: "",
     ville: "",
@@ -113,6 +113,8 @@ export class FormrapportPage implements OnInit {
 
   genders: Array<string>;
   issues: Array<string>;
+  isEnabled = 0;
+  fromPage = "";
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
@@ -143,6 +145,7 @@ export class FormrapportPage implements OnInit {
     //console.log()
 
     this.route.queryParams.subscribe((params) => {
+      this.fromPage = params.from;
       this.user = JSON.parse(params.user);
       ////console.log(this.user);
       if (params.item !== "null") {
@@ -163,9 +166,8 @@ export class FormrapportPage implements OnInit {
         this.client.nom = this.rdv.nom;
         this.client.idadr = this.rdv.idadr;
         this.client.prenom = this.rdv.prenom;
-        this.client.autoCompleteCli = this.rdv.autoCompleteCli;
-        this.client.adresse = this.rdv.autoCompleteCli;
-        this.client.numAdr = this.rdv.numAdr;
+        this.client.adresse = this.rdv.adresse;
+        this.client.num = this.rdv.num;
         this.client.rue = this.rdv.rue;
         this.client.cp = this.rdv.cp;
         this.client.ville = this.rdv.ville;
@@ -174,7 +176,7 @@ export class FormrapportPage implements OnInit {
         this.client.long = this.rdv.long;
         this.client.comTele = this.rdv.comTele;
         this.client.issue = this.rdv.issue;
-
+        this.client.source = this.rdv.source;
         this.client.color = this.rdv.issue;
 
         this.client.montant = this.rdv.montant;
@@ -184,7 +186,7 @@ export class FormrapportPage implements OnInit {
       } else {
         this.isnew = true;
         this.affAdr = 1;
-
+        this.client.source = "Mr";
         this.rdv.dateRdv = "";
         this.rdv.heureRDV = "";
         this.rdv.nom = "";
@@ -205,9 +207,8 @@ export class FormrapportPage implements OnInit {
         this.client.nom = this.rdv.nom;
         this.client.idadr = this.rdv.idadr;
         this.client.prenom = this.rdv.prenom;
-        this.client.autoCompleteCli = this.rdv.autoCompleteCli;
-        this.client.adresse = this.rdv.autoCompleteCli;
-        this.client.numAdr = this.rdv.numAdr;
+        this.client.adresse = this.rdv.adresse;
+        this.client.num = this.rdv.num;
         this.client.rue = this.rdv.rue;
         this.client.cp = this.rdv.cp;
         this.client.ville = this.rdv.ville;
@@ -230,7 +231,7 @@ export class FormrapportPage implements OnInit {
   }
 
   onChange(event) {
-    console.log(event.detail.value);
+    //console.log(event.detail.value);
     if (event.detail.value == "VENTE") {
       this.affVente = 1;
       this.affRepo = 0;
@@ -264,7 +265,15 @@ export class FormrapportPage implements OnInit {
         mprod.qte = res.data.qte;
         mprod.prix = res.data.prix;
         this.listprod.push(mprod);
-        mprod.array.forEach((element) => {});
+
+        let montant = 0;
+        this.listprod.forEach((element) => {
+          console.log(element);
+          var prix = parseFloat(element.prix);
+          var qte = parseInt(element.qte);
+          montant += prix * qte;
+        });
+        this.validations_form.controls["montant"].setValue(montant.toFixed(2));
         //console.log(this.listprod)
       }
     });
@@ -272,51 +281,62 @@ export class FormrapportPage implements OnInit {
     await modal.present();
   }
 
+  ionViewWillEnter() {}
+
   ngOnInit() {
     this.genders = ["Mr", "Mme", "MrMme"];
     let env = this;
 
-    this.globalservice.getIssues(function (data) {
-      env.issues = data;
-      console.log(data);
-    });
     var dtrdv = "";
     var hrrdv = "";
-    if (this.isnew && !this.isrdv) {
+
+    this.globalservice.getIssues((data) => {
+      this.issues = data;
+      console.log(data);
+    });
+
+    if (env.isnew && !env.isrdv) {
       var dn = new Date().toISOString();
       dtrdv = dn;
-      hrrdv = this.globalservice.formatHeure(dn);
+      hrrdv = env.globalservice.formatHeure(dn);
     }
-    this.validations_form = this.formBuilder.group({
+
+    var dt = new Date();
+    dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 22, 0);
+    console.log(dt);
+
+    var de = new Date(env.client.dateRdv);
+    de = new Date(de.getFullYear(), de.getMonth(), de.getDate(), 10, 0);
+    console.log(de);
+
+    if (de > dt) {
+      console.log("rdv plus tard");
+      this.isEnabled = 1;
+    } else console.log("rdv ok");
+
+    env.validations_form = env.formBuilder.group({
       dateRdv: new FormControl(dtrdv),
       heureRDV: new FormControl(hrrdv),
-      date: new FormControl(this.client.date),
-      tele: new FormControl(this.client.tele),
+      date: new FormControl(env.client.date),
+      tele: new FormControl(env.client.tele),
       rapport: new FormControl(""),
       comTele: new FormControl(""),
-      adresse: new FormControl(
-        this.client.autoCompleteCli,
-        Validators.required
-      ),
-      autoCompleteCli: new FormControl(
-        this.client.autoCompleteCli,
-        Validators.required
-      ),
-      idadr: new FormControl(this.client.idadr),
-      numAdr: new FormControl(this.client.numAdr),
-      rue: new FormControl(this.client.rue),
-      cp: new FormControl(this.client.cp),
-      ville: new FormControl(this.client.ville),
-      lat: new FormControl(this.client.lat),
-      long: new FormControl(this.client.long),
-      tel: new FormControl(this.client.tel, Validators.required),
-      nom: new FormControl(this.client.nom, Validators.required),
-      prenom: new FormControl(this.client.prenom, Validators.required),
-      gender: new FormControl(this.genders[0], Validators.required),
-      issue: new FormControl("", Validators.required),
-      montant: new FormControl(this.client.montant),
-      mens: new FormControl(this.client.mens),
-      nbmens: new FormControl(this.client.nbmens),
+      adresse: new FormControl(env.client.adresse, Validators.required),
+      idadr: new FormControl(env.client.idadr),
+      num: new FormControl(env.client.num),
+      rue: new FormControl(env.client.rue),
+      cp: new FormControl(env.client.cp),
+      ville: new FormControl(env.client.ville),
+      lat: new FormControl(env.client.lat),
+      long: new FormControl(env.client.long),
+      tel: new FormControl(env.client.tel, Validators.required),
+      nom: new FormControl(env.client.nom, Validators.required),
+      prenom: new FormControl(env.client.prenom, Validators.required),
+      source: new FormControl(env.genders[0]),
+      issue: new FormControl(env.rdv.issue, Validators.required),
+      montant: new FormControl(env.client.montant),
+      mens: new FormControl(env.client.mens),
+      nbmens: new FormControl(env.client.nbmens),
     });
   }
 
@@ -364,7 +384,7 @@ export class FormrapportPage implements OnInit {
     );
     this.validations_form.controls["adresse"].setValue(event.value.label);
     this.validations_form.controls["idadr"].setValue(event.value.id);
-    this.validations_form.controls["numAdr"].setValue(event.value.num);
+    this.validations_form.controls["num"].setValue(event.value.num);
     this.validations_form.controls["rue"].setValue(event.value.rue);
     this.validations_form.controls["cp"].setValue(event.value.cp);
     this.validations_form.controls["ville"].setValue(event.value.ville);
@@ -390,7 +410,7 @@ export class FormrapportPage implements OnInit {
           );
           env.validations_form.controls["adresse"].setValue(madr[0].label);
           env.validations_form.controls["idadr"].setValue(madr[0].id);
-          env.validations_form.controls["numAdr"].setValue(madr[0].num);
+          env.validations_form.controls["num"].setValue(madr[0].num);
           env.validations_form.controls["rue"].setValue(madr[0].rue);
           env.validations_form.controls["cp"].setValue(madr[0].cp);
           env.validations_form.controls["ville"].setValue(madr[0].ville);
@@ -412,7 +432,7 @@ export class FormrapportPage implements OnInit {
 
     this.rdv.adresse = values.autoCompleteCli;
 
-    this.rdv.numAdr = values.numAdr;
+    this.rdv.num = values.num;
     this.rdv.rue = values.rue;
     this.rdv.cp = values.cp;
     this.rdv.ville = values.ville;
@@ -455,10 +475,12 @@ export class FormrapportPage implements OnInit {
     //date relance
 
     if (!this.isnew) {
+      console.log("formrapport");
       this.globalservice.updateRdv(this.rdv, function (res) {
-        env.router.navigate(["/home"]);
+        env.router.navigate([env.fromPage]);
       });
     } else {
+      console.log("formrapportelse");
       var dn = new Date().toISOString();
       this.rdv.datepriserdv = dn;
       this.rdv.idtel = "";
@@ -487,12 +509,10 @@ export class FormrapportPage implements OnInit {
         console.log(dt);
         this.rdv.daterelance = dt;
       } else this.rdv.status = "rapport";
-      //console.log(this.rdv);
-      //addNewRdvLocal
-      console.log("par la");
+
       this.globalservice.addNewRdvLocal(this.rdv, function (data) {
         //env.globalservice.updateRdvLocal(env.rdv, function (res) {
-        env.router.navigate(["/home"]);
+        env.router.navigate([env.fromPage]);
         //});
       });
     }

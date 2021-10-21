@@ -16,24 +16,25 @@
 
         <ion-col size="4">
           <ion-item class="headeritem">
-            <ion-datetime displayFormat="DD/MM/YYYY" type="text" formControlName="dateRdv" placeholder="Date">
+            <ion-datetime displayFormat="DD/MM/YYYY" type="text" formControlName="dateRdv" placeholder="Date"  style="color:brown;">
             </ion-datetime>
           </ion-item>
         </ion-col>
 
         <ion-col size="4">
           <ion-item class="headeritem">
-            <ion-datetime displayFormat="HH:mm" type="text" formControlName="heureRDV" placeholder="Heure">
+            <ion-datetime displayFormat="HH:mm" type="text" formControlName="heureRDV" placeholder="Heure"  style="color:brown;">
             </ion-datetime>
           </ion-item>
         </ion-col>
         <ion-col size="4">
 
-          <ion-select formControlName="issue" cancelText="Annuler" okText="OK" (ionChange)="onChange($event)"
+          <ion-select formControlName="issue" cancelText="Annuler" okText="OK" (ionChange)="onChange($event)" [selected-text]="rdv.issue"
             placeholder="Issues">
-            <ion-select-option *ngFor="let gender of issues" [value]="gender">{{gender.nom}}</ion-select-option>
+            <ion-select-option *ngFor="let gender of issues" [selected]="gender == rdv.issue" [value]="gender">{{gender.nom}}</ion-select-option>
           </ion-select>
 
+          
           <!--<div class="validation-errors">
             <ng-container *ngFor="let validation of validation_messages.issues">
               <div class="error-message" *ngIf="validations_form.get('issues').hasError(validation.type) && (validations_form.get('issues').dirty || validations_form.get('issues').touched)">
@@ -59,7 +60,7 @@
         </ion-col>
         <ion-col size="4">
 
-          <ion-select formControlName="issue" cancelText="Annuler" okText="OK" (ionChange)="onChange($event)"
+          <ion-select placeholder="{{client.issue}}" formControlName="issue" cancelText="Annuler" okText="OK" (ionChange)="onChange($event)" [disabled]="isEnabled"
             placeholder="Issues">
             <ion-select-option *ngFor="let gender of issues" [value]="gender.nom">{{gender.nom}}</ion-select-option>
           </ion-select>
@@ -78,7 +79,7 @@
       <ion-row>
         <ion-col size="2">
 
-          <ion-select formControlName="gender" cancelText="Annuler" okText="OK">
+          <ion-select formControlName="source" cancelText="Annuler" okText="OK">
             <ion-select-option *ngFor="let gender of genders" [value]="gender">{{gender}}</ion-select-option>
           </ion-select>
 
@@ -129,13 +130,13 @@
         </ion-col>
       </ion-row>
 
-      <ion-input type="hidden" readonly formControlName="autoCompleteCli"></ion-input>
+      <ion-input type="hidden" readonly formControlName="adresse"></ion-input>
 
       <ion-row>
         <ion-col size="2">
           <ion-item>
             <ion-label color="primary">Num.</ion-label>
-            <ion-input type="text" readonly formControlName="numAdr"></ion-input>
+            <ion-input type="text" readonly formControlName="num"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size="10">

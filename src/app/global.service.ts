@@ -344,21 +344,13 @@ export class GlobalService {
     });
   }
   public addNewRdvLocal(rdv, callback) {
-    //ajouter dans storage new
-    //ajouter dans storage rdv
-    //this.storage.get('new').then(data => {
-    //  data.push(rdv);
-    //this.storage.set('new', data);
-    //let tmp=
     this.storage.get("rdv").then((data2) => {
       data2["data"].push(rdv);
       this.storage.set("rdv", data2).then((dataxx) => {
         //console.log(dataxx)
-        callback("ok");
+        callback(data2);
       });
     });
-
-    //})
   }
   /******* /API DES RDV *******/
   public loadUser() {

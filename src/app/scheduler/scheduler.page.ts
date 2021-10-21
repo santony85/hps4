@@ -35,9 +35,13 @@ export class SchedulerPage implements OnInit {
   }
   ngOnInit() {}
 
-  ionViewDidEnter() {
+  ionViewWillEnter() {
     console.log(this.user);
     forwardRef(() => Calendar);
+    this.synchro();
+  }
+
+  async synchro() {
     let env = this;
     var murl = "https://hps-crm.fr/restobj/" + this.user._id + "/rdv";
     this.http.get(murl).subscribe((results2) => {
@@ -83,9 +87,15 @@ export class SchedulerPage implements OnInit {
             queryParams: {
               item: JSON.stringify(info.event._def.extendedProps),
               user: JSON.stringify(env.globalservice.getUser()),
+              from: "/scheduler",
             },
           };
-          env.router.navigate(["/formrapport"], navigationExtras);
+          if (info.event._def.ui.display !== "background") {
+            env.router.navigate(["/formrapport"], navigationExtras);
+          } else {
+            console.log(info.event._def.extendedProps._id);
+            env.presentAlertConfirm(info.event._def.extendedProps._id);
+          }
           //fin si
         },
         eventDrop: function (info) {
@@ -107,33 +117,34 @@ export class SchedulerPage implements OnInit {
     });
   }
 
-  async synchro() {
-    console.log("la");
+  async presentAlertConfirm(id) {
     let env = this;
     const alert = await this.alertCtrl.create({
-      header: "Synchronisation",
-      message: "Mise a jour effectuée avec succès",
-      buttons: ["OK"],
+      header: "Alerte !!!",
+      message: "Voulez-vous supprimer l'evenement ?",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: (blah) => {},
+        },
+        {
+          text: "Confirmer",
+          handler: () => {
+            var murl = "https://hps-crm.fr/delobj/events/" + id;
+            this.http
+              .get(murl, { responseType: "text" })
+              .subscribe((results2) => {
+                //reload page
+                env.synchro();
+              });
+          },
+        },
+      ],
     });
 
-    var loading = await this.loadingController.create({
-      message: "Synchronisation...",
-    });
-    await loading.present();
-    // this.storage.set('rdv', []);
-    env.globalservice.updateRdvAll(function (data) {
-      env.globalservice.loadRdv().then((datax) => {
-        // env.segmentModel = "rdv";
-        // env.affBadge=0;
-        env.globalservice.getNbRdv().then((data) => {
-          // env.rdv=data["data"];
-          // env.maj= data["maj"];
-          // env.countNbAction();
-          loading.dismiss();
-          alert.present();
-        });
-      });
-    });
+    await alert.present();
   }
 
   async presentCheckboxNew() {
@@ -196,6 +207,7 @@ export class SchedulerPage implements OnInit {
                 queryParams: {
                   item: JSON.stringify(null),
                   user: JSON.stringify(this.globalservice.getUser()),
+                  from: "/scheduler",
                 },
               };
               this.router.navigate(["/formrapport"], navigationExtras);

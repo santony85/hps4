@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AlertController, LoadingController } from "@ionic/angular";
 import { GlobalService } from "../global.service";
+import { Router, NavigationExtras } from "@angular/router";
 
 @Component({
   selector: "app-listerapport",
@@ -17,6 +18,7 @@ export class ListerapportPage implements OnInit {
   maj = "";
 
   constructor(
+    private router: Router,
     public globalservice: GlobalService,
     public loadingController: LoadingController,
     private alertCtrl: AlertController
@@ -93,5 +95,15 @@ export class ListerapportPage implements OnInit {
         });
       });
     });
+  }
+  affRdv(item) {
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        item: JSON.stringify(item),
+        user: JSON.stringify(this.globalservice.getUser()),
+        from: "/listrapport",
+      },
+    };
+    this.router.navigate(["/formrapport"], navigationExtras);
   }
 }

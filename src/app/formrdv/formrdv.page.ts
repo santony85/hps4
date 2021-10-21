@@ -17,6 +17,7 @@ import { Api } from "../providers/api";
 import { GlobalService } from "../global.service";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { LoadingController } from "@ionic/angular";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-formrdv",
@@ -78,7 +79,8 @@ export class FormrdvPage implements OnInit {
     public globalservice: GlobalService,
     private geolocation: Geolocation,
     public loadingController: LoadingController,
-    public api: Api
+    public api: Api,
+    private http: HttpClient
   ) {
     /*this.tmpdate = this.api.makeDateUs(new Date(), 1) + " à " + this.api.makeHour(new Date());
     this.tmpdatep = this.api.makeDateUs(new Date(), 1) + " à " + this.api.makeHourp(new Date());
@@ -103,7 +105,7 @@ export class FormrdvPage implements OnInit {
         this.client.prenom = this.rdv.prenom;
         this.client.autoCompleteCli = this.rdv.autoCompleteCli;
         this.client.adresse = this.rdv.autoCompleteCli;
-        this.client.num = this.rdv.numAdr;
+        this.client.num = this.rdv.num;
         this.client.rue = this.rdv.rue;
         this.client.cp = this.rdv.cp;
         this.client.ville = this.rdv.ville;
@@ -157,7 +159,7 @@ export class FormrdvPage implements OnInit {
         this.client.prenom = this.rdv.prenom;
         this.client.autoCompleteCli = this.rdv.autoCompleteCli;
         this.client.adresse = this.rdv.autoCompleteCli;
-        this.client.num = this.rdv.numAdr;
+        this.client.num = this.rdv.num;
         this.client.rue = this.rdv.rue;
         this.client.cp = this.rdv.cp;
         this.client.ville = this.rdv.ville;
@@ -334,7 +336,7 @@ export class FormrdvPage implements OnInit {
           env.validations_form.controls["cp"].setValue(madr[0].cp);
           env.validations_form.controls["ville"].setValue(madr[0].ville);
           env.validations_form.controls["lat"].setValue(madr[0].lat);
-          env.validations_form.controls["long"].setValue(madr[0].lng);
+          env.validations_form.controls["long"].setValue(madr[0]);
           loading.dismiss();
           //if(env.mylocate=="")env.mylocate=madr[0];
         }
@@ -348,8 +350,11 @@ export class FormrdvPage implements OnInit {
     this.rdv.nom = values.nom;
     this.rdv.idadr = values.idadr;
     this.rdv.prenom = values.prenom;
-    this.rdv.autoCompleteCli = values.autoCompleteCli;
+    //this.rdv.autoCompleteCli = values.autoCompleteCli;
     this.rdv.adresse = values.autoCompleteCli;
+
+    delete this.rdv.autoCompleteCli;
+
     this.rdv.num = values.num;
     this.rdv.rue = values.rue;
     this.rdv.cp = values.cp;
@@ -358,33 +363,36 @@ export class FormrdvPage implements OnInit {
     this.rdv.lat = String(values.lat);
     this.rdv.long = String(values.long);
     this.rdv.comTele = values.comTele;
-    this.rdv.civilite = values.gender;
+    this.rdv.source = values.gender;
+    this.rdv.lat = "" + this.rdv.lat;
+    this.rdv.long = "" + this.rdv.long;
 
     this.rdv.tranchemr = values.tranchemr;
     this.rdv.tranchemme = values.tranchemme;
     this.rdv.anneeConstr = values.anneeConstr;
     this.rdv.nboccupants = values.nboccupants;
+    this.rdv.aff = "2";
 
     if (!this.isnew) {
+      console.log("formrdv");
       this.rdv.issuerdv = "CONFIRME";
       this.rdv.dateRdv = values.dateRdv;
       this.rdv.heureRDV = this.globalservice.formatHeure(values.heureRDV);
       this.rdv.status = "rdv";
 
-      this.globalservice.updateRdvLocal(this.rdv, function (res) {
+      var murl = "https://hps-crm.fr/addobj/newhpsrdv";
+      this.http.post(murl, this.rdv).subscribe((results2) => {
+        console.log(results2);
         env.router.navigate(["/home"]);
       });
-      /*this.globalservice.updateRdv(this.rdv, function (res) {
-        
-      });*/
     } else {
+      console.log("formrdvelse");
+
       var dn = new Date().toISOString();
       this.rdv.datepriserdv = dn;
       this.rdv.idtel = "";
       this.rdv.nomtel = "";
-      this.rdv.numAdr = this.rdv.num; //??
-      this.rdv.source = this.rdv.civilite;
-      this.rdv.nomcomhps1 = this.user.nom;
+      this.rdv.nomcomhps1 = this.user.prenom + " " + this.user.nom;
       this.rdv.idcomhps1 = this.user._id;
       this.rdv.nomcomhps2 = "";
       this.rdv.idcomhps2 = "";
@@ -395,7 +403,6 @@ export class FormrdvPage implements OnInit {
         this.rdv.issuerdv = "CONFIRME";
         this.rdv.dateRdv = values.dateRdv;
         this.rdv.heureRDV = this.globalservice.formatHeure(values.heureRDV);
-
         this.rdv.origine = "rdv";
         this.rdv.status = "rdv";
       } else {
@@ -405,10 +412,9 @@ export class FormrdvPage implements OnInit {
         this.rdv.origine = "contact";
         this.rdv.status = "contact";
       }
-      //console.log(this.rdv);
-      //addNewRdvLocal
-      this.globalservice.addNewRdvLocal(this.rdv, function (data) {
-        //console.log(data);
+      var murl = "https://hps-crm.fr/addobj/newhpsrdv";
+      this.http.post(murl, this.rdv).subscribe((results2) => {
+        console.log(results2);
         env.router.navigate(["/home"]);
       });
     }

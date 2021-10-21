@@ -173,6 +173,7 @@ export class HomePage {
                 queryParams: {
                   item: JSON.stringify(null),
                   user: JSON.stringify(this.globalservice.getUser()),
+                  from: "/home",
                 },
               };
               this.router.navigate(["/formrapport"], navigationExtras);
@@ -303,6 +304,7 @@ export class HomePage {
                 queryParams: {
                   item: JSON.stringify(item),
                   user: JSON.stringify(this.globalservice.getUser()),
+                  from: "/home",
                 },
               };
               this.router.navigate(["/formrapport"], navigationExtras);
@@ -333,6 +335,7 @@ export class HomePage {
         queryParams: {
           item: JSON.stringify(item),
           user: JSON.stringify(this.globalservice.getUser()),
+          from: "/home",
         },
       };
       this.router.navigate(["/formrapport"], navigationExtras);
