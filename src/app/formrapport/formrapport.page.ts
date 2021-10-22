@@ -109,6 +109,11 @@ export class FormrapportPage implements OnInit {
     montant: "",
     mens: "",
     nbmens: "",
+
+    tranchemr: "",
+    tranchemme: "",
+    anneeConstr: "",
+    nboccupants: "",
   };
 
   genders: Array<string>;
@@ -184,6 +189,12 @@ export class FormrapportPage implements OnInit {
         this.client.montant = this.rdv.montant;
         this.client.mens = this.rdv.mens;
         this.client.nbmens = this.rdv.nbmens;
+
+        this.client.tranchemr = this.rdv.tranchemr;
+        this.client.tranchemme = this.rdv.tranchemme;
+        this.client.anneeConstr = this.rdv.anneeConstr;
+        this.client.nboccupants = this.rdv.nboccupants;
+
         /* /ORM */
         console.log(this.rdv.produits);
         let env = this;
@@ -223,6 +234,10 @@ export class FormrapportPage implements OnInit {
         this.rdv.long = "";
         this.rdv.comTele = "";
         this.rdv.issuerdv = "";
+        this.rdv.tranchemr = "";
+        this.rdv.tranchemme = "";
+        this.rdv.anneeConstr = "";
+        this.rdv.nboccupants = "";
         this.client.dateRdv = this.rdv.dateRdv;
         this.client.heureRDV = this.rdv.heureRDV;
         this.client.nom = this.rdv.nom;
@@ -238,6 +253,10 @@ export class FormrapportPage implements OnInit {
         this.client.long = this.rdv.long;
         this.client.comTele = this.rdv.comTele;
         this.client.issuerdv = this.rdv.issuerdv;
+        this.client.tranchemr = this.rdv.tranchemr;
+        this.client.tranchemme = this.rdv.tranchemme;
+        this.client.anneeConstr = this.rdv.anneeConstr;
+        this.client.nboccupants = this.rdv.nboccupants;
       }
     });
   }
@@ -358,6 +377,10 @@ export class FormrapportPage implements OnInit {
       montant: new FormControl(env.client.montant),
       mens: new FormControl(env.client.mens),
       nbmens: new FormControl(env.client.nbmens),
+      tranchemr: new FormControl(this.client.tranchemr),
+      tranchemme: new FormControl(this.client.tranchemme),
+      anneeConstr: new FormControl(this.client.anneeConstr),
+      nboccupants: new FormControl(this.client.nboccupants),
     });
   }
 
@@ -472,6 +495,11 @@ export class FormrapportPage implements OnInit {
     this.rdv.montant = values.montant;
     this.rdv.mens = values.mens;
     this.rdv.nbmens = values.nbmens;
+
+    this.rdv.tranchemr = values.tranchemr;
+    this.rdv.tranchemme = values.tranchemme;
+    this.rdv.anneeConstr = values.anneeConstr;
+    this.rdv.nboccupants = values.nboccupants;
 
     this.rdv.rapport = values.rapport;
 
