@@ -7,9 +7,6 @@
    
     <ion-buttons slot="end">
       <ion-button (click)="synchro()">Mettre a jour</ion-button>
-      <ion-button (click)="presentCheckboxNew()">
-        Nouveau
-      </ion-button>
       </ion-buttons>
   </ion-toolbar>
   <ion-grid>
@@ -42,8 +39,6 @@
         <ion-card-header color="light" [ngStyle]="{'background-color': globalservice.getColor(item.color)}" >
           <ion-card-title class="cardfooter">Le {{globalservice.formatDate(item.dateRdv)}} à {{item.heureRDV}}
           </ion-card-title> 
-          <ion-badge *ngIf="affBadge && item.dateDiff > 0" class="center-right">J+{{item.dateDiff}}</ion-badge>
-          <ion-badge *ngIf="affBadge && item.dateDiff < 0" class="center-right">J{{item.dateDiff}}</ion-badge>
         </ion-card-header>
 
         <ion-card-content (click)="affRdv(item)">
