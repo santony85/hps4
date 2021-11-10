@@ -114,7 +114,7 @@ export class HomePage {
         {
           name: "radio1",
           type: "radio",
-          label: "Rendez-vous",
+          label: "Rendez-vous / Phy",
           value: "0",
           checked: true,
         },
@@ -123,12 +123,6 @@ export class HomePage {
           type: "radio",
           label: "Contact",
           value: "1",
-        },
-        {
-          name: "radio3",
-          type: "radio",
-          label: "Prospect",
-          value: "2",
         },
         {
           name: "radio3",

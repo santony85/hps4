@@ -318,6 +318,26 @@ export class FormrdvPage implements OnInit {
       message: "Localisation...",
     });
     await loading.present();
+
+    var options = {
+      enableHighAccuracy: true,
+      timeout: 5000,
+      maximumAge: 0,
+    };
+
+    function success(pos) {
+      var crd = pos.coords;
+
+      console.log("Votre position actuelle est :");
+      console.log(`Latitude : ${crd.latitude}`);
+      console.log(`Longitude : ${crd.longitude}`);
+      console.log(`La précision est de ${crd.accuracy} mètres.`);
+    }
+
+    function error(err) {
+      console.warn(`ERREUR (${err.code}): ${err.message}`);
+    }
+
     //this.map2.locate().on("locationfound", (e: any) => {
     this.geolocation.getCurrentPosition().then((resp) => {
       //env.mmark.setLatLng(e.latlng);

@@ -36,6 +36,8 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import listPlugin from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -62,7 +64,8 @@ FullCalendarModule.registerPlugins([
     HttpClientModule,
     ModalproduitPageModule,
     IonicSelectableModule,
-    ReactiveFormsModule],
+    ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
     
 
