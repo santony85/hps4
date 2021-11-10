@@ -155,16 +155,16 @@ export class SchedulerPage implements OnInit {
         {
           name: "radio1",
           type: "radio",
-          label: "Rendez-vous",
+          label: "Rendez-vous / Phy",
           value: "0",
           checked: true,
         },
-        {
+        /*{
           name: "radio2",
           type: "radio",
           label: "Contact",
           value: "1",
-        },
+        },*/
         {
           name: "radio3",
           type: "radio",
