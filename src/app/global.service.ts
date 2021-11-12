@@ -143,6 +143,44 @@ export class GlobalService {
   /*****************************/
   /******* API DES RDV *******/
   /** EXTERNE */
+
+  public newSynchro() {
+    let env = this;
+    this.loadIssues();
+    this.loadFamille();
+    this.loadProduit();
+    return new Promise((resolve) => {
+      this.storage.get("user").then((user) => {
+        var murl = "https://hps-crm.fr/restobj/" + user._id + "/all";
+        console.log(murl);
+        env.http.get(murl).subscribe((results2) => {
+          let data = {
+            maj: new Date(),
+            data: results2["data"],
+          };
+          let tmpLst = [];
+          //loop
+          for (var i = 0; i < data["data"].length; i++) {
+            ////console.log(data['data'][i])
+            data["data"][i].dateDiff = env.diff_days(
+              new Date(),
+              new Date(data["data"][i].dateRdv)
+            );
+            if (data["data"][i].status != "rapport") data["data"][i].color = 0;
+            tmpLst.push(data["data"][i]);
+          }
+          tmpLst = tmpLst.sort(function (a, b) {
+            return a.dateDiff - b.dateDiff;
+          });
+          data["data"] = tmpLst;
+          console.log(data["data"]);
+          env.storage.set("rdv", data);
+          resolve(data);
+        });
+      });
+    });
+  }
+
   public loadRdv() {
     return new Promise((resolve) => {
       this.storage.get("user").then((user) => {
@@ -167,7 +205,6 @@ export class GlobalService {
   }
   /**************/
   public getRdv() {
-    //this.updateRdvFake()
     return new Promise((resolve) => {
       this.storage.get("rdv").then((data) => {
         let tmpLst = [];

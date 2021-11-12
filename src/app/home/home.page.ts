@@ -6,6 +6,7 @@ import { AlertController } from "@ionic/angular";
 
 import { CallNumber } from "@ionic-native/call-number/ngx";
 import { LoadingController } from "@ionic/angular";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 import { Storage } from "@ionic/storage";
 
@@ -27,6 +28,8 @@ export class HomePage {
 
   affBadge = 0;
 
+  user: any;
+
   constructor(
     private router: Router,
     public globalservice: GlobalService,
@@ -34,6 +37,7 @@ export class HomePage {
     private callNumber: CallNumber,
     public loadingController: LoadingController,
     private storage: Storage,
+    private http: HttpClient,
     private alertCtrl: AlertController
   ) {}
 
@@ -42,7 +46,8 @@ export class HomePage {
     this.menuCtrl.enable(true);
     this.globalservice.loadUser();
 
-    this.synchro();
+    //this.synchro();
+    this.newSynchro();
   }
 
   countNbAction() {
@@ -57,6 +62,21 @@ export class HomePage {
     });
     this.globalservice.getNbRetard().then((data) => {
       this.nretard = data["data"].length;
+    });
+  }
+
+  newSynchro() {
+    let env = this;
+
+    env.globalservice.newSynchro().then((vals) => {
+      env.globalservice.getNbRdv().then((data) => {
+        console.log(data);
+        env.rdv = data["data"];
+        env.maj = data["maj"];
+        env.segmentModel = "rdv";
+      });
+
+      env.countNbAction();
     });
   }
 
