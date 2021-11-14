@@ -82,6 +82,8 @@ export class FormrapportPage implements OnInit {
   tmpColor: any = "";
   affVente = 0;
   affRepo = 0;
+  nomC1 = "";
+  nomC2 = "";
 
   client = {
     dateRdv: "",
@@ -114,6 +116,10 @@ export class FormrapportPage implements OnInit {
     tranchemme: "",
     anneeConstr: "",
     nboccupants: "",
+    idcomhps1: "",
+    nomcomhps1: "",
+    idcomhps2: "",
+    nomcomhps2: "",
   };
 
   genders: Array<string>;
@@ -194,7 +200,12 @@ export class FormrapportPage implements OnInit {
         this.client.tranchemme = this.rdv.tranchemme;
         this.client.anneeConstr = this.rdv.anneeConstr;
         this.client.nboccupants = this.rdv.nboccupants;
-
+        this.client.idcomhps1 = this.rdv.idcomhps1;
+        this.client.nomcomhps1 = this.rdv.nomcomhps1;
+        this.client.idcomhps2 = this.rdv.idcomhps2;
+        this.client.nomcomhps2 = this.rdv.nomcomhps2;
+        this.nomC1 = this.client.nomcomhps1;
+        this.nomC2 = this.client.nomcomhps2;
         /* /ORM */
         console.log(this.rdv.produits);
         let env = this;
@@ -238,6 +249,11 @@ export class FormrapportPage implements OnInit {
         this.rdv.tranchemme = "";
         this.rdv.anneeConstr = "";
         this.rdv.nboccupants = "";
+        this.rdv.idcomhps1 = "";
+        this.rdv.nomcomhps1 = "";
+        this.rdv.idcomhps2 = "";
+        this.rdv.nomcomhps2 = "";
+
         this.client.dateRdv = this.rdv.dateRdv;
         this.client.heureRDV = this.rdv.heureRDV;
         this.client.nom = this.rdv.nom;
@@ -257,6 +273,10 @@ export class FormrapportPage implements OnInit {
         this.client.tranchemme = this.rdv.tranchemme;
         this.client.anneeConstr = this.rdv.anneeConstr;
         this.client.nboccupants = this.rdv.nboccupants;
+        this.client.idcomhps1 = this.rdv.idcomhps2;
+        this.client.nomcomhps1 = this.rdv.nomcomhps2;
+        this.client.idcomhps2 = this.rdv.idcomhps2;
+        this.client.nomcomhps2 = this.rdv.nomcomhps2;
       }
     });
   }
@@ -381,6 +401,10 @@ export class FormrapportPage implements OnInit {
       tranchemme: new FormControl(this.client.tranchemme),
       anneeConstr: new FormControl(this.client.anneeConstr),
       nboccupants: new FormControl(this.client.nboccupants),
+      idcomhps1: new FormControl(this.client.idcomhps1),
+      nomcomhps1: new FormControl(this.client.nomcomhps1),
+      idcomhps2: new FormControl(this.client.idcomhps2),
+      nomcomhps2: new FormControl(this.client.nomcomhps2),
     });
   }
 
@@ -500,6 +524,10 @@ export class FormrapportPage implements OnInit {
     this.rdv.tranchemme = values.tranchemme;
     this.rdv.anneeConstr = values.anneeConstr;
     this.rdv.nboccupants = values.nboccupants;
+    this.rdv.idcomhps1 = values.idcomhps1;
+    this.rdv.nomcomhps1 = values.nomcomhps1;
+    this.rdv.idcomhps2 = values.idcomhps2;
+    this.rdv.nomcomhps2 = values.nomcomhps2;
 
     this.rdv.rapport = values.rapport;
 

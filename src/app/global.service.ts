@@ -149,6 +149,7 @@ export class GlobalService {
     this.loadIssues();
     this.loadFamille();
     this.loadProduit();
+    this.loadComs();
     return new Promise((resolve) => {
       this.storage.get("user").then((user) => {
         var murl = "https://hps-crm.fr/restobj/" + user._id + "/all";
@@ -417,6 +418,21 @@ export class GlobalService {
     });
   }
   /*****************************/
+  public getComs(callback) {
+    this.storage.get("commerciaux").then((user) => {
+      return callback(user);
+    });
+  }
+
+  /*****************************/
+  public loadComs() {
+    //console.log("ici")
+    var murl = "https://hps-crm.fr/list/newhpsusers";
+    this.http.get(murl).subscribe((results) => {
+      console.log(results);
+      this.storage.set("commerciaux", results);
+    });
+  }
   /*****************************/
   public getLikeListCB(col, val, field, callback) {
     var murl = "https://hps-crm.fr/likext/" + col + "/" + field + "/" + val;

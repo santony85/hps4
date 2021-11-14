@@ -18,6 +18,7 @@ import { GlobalService } from "../global.service";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { LoadingController } from "@ionic/angular";
 import { HttpClient } from "@angular/common/http";
+import { Storage } from "@ionic/storage";
 
 @Component({
   selector: "app-formrdv",
@@ -41,6 +42,7 @@ export class FormrdvPage implements OnInit {
 
   mylocate: any = "";
   tmpColor: any = "";
+  tmpName = "";
 
   txtrdv = "";
 
@@ -67,10 +69,13 @@ export class FormrdvPage implements OnInit {
     tranchemme: "",
     anneeConstr: "",
     nboccupants: "",
+    idcomhps2: "",
+    nomcomhps2: "",
   };
 
   genders: Array<string>;
   issues: Array<string>;
+  commerciaux: Array<string>;
   constructor(
     public formBuilder: FormBuilder,
     private router: Router,
@@ -81,7 +86,8 @@ export class FormrdvPage implements OnInit {
     private geolocation: Geolocation,
     public loadingController: LoadingController,
     public api: Api,
-    private http: HttpClient
+    private http: HttpClient,
+    private storage: Storage
   ) {
     this.route.queryParams.subscribe((params) => {
       this.user = JSON.parse(params.user);
@@ -116,6 +122,10 @@ export class FormrdvPage implements OnInit {
         this.client.tranchemme = this.rdv.tranchemme;
         this.client.anneeConstr = this.rdv.anneeConstr;
         this.client.nboccupants = this.rdv.nboccupants;
+
+        this.client.idcomhps2 = this.rdv.idcomhps2;
+        this.client.nomcomhps2 = this.rdv.nomcomhps2;
+
         /* /ORM */
       } else {
         this.isnew = true;
@@ -148,6 +158,8 @@ export class FormrdvPage implements OnInit {
         this.rdv.tranchemme = "";
         this.rdv.anneeConstr = "";
         this.rdv.nboccupants = "";
+        this.rdv.idcomhps2 = "";
+        this.rdv.nomcomhps2 = "";
 
         this.client.dateRdv = this.rdv.dateRdv;
         this.client.heureRDV = this.rdv.heureRDV;
@@ -170,6 +182,8 @@ export class FormrdvPage implements OnInit {
         this.client.tranchemme = this.rdv.tranchemme;
         this.client.anneeConstr = this.rdv.anneeConstr;
         this.client.nboccupants = this.rdv.nboccupants;
+        this.client.idcomhps2 = this.rdv.idcomhps2;
+        this.client.nomcomhps2 = this.rdv.nomcomhps2;
 
         this.affAdr = 1;
       }
@@ -183,10 +197,6 @@ export class FormrdvPage implements OnInit {
         port.id.toString().toLowerCase().indexOf(text) !== -1
       );
     });
-  }
-  onChange(event) {
-    //console.log(event);
-    this.tmpColor = event.detail.value.color;
   }
 
   async presentModal() {
@@ -214,6 +224,12 @@ export class FormrdvPage implements OnInit {
       env.issues = data;
       //console.log(data);
     });
+
+    this.globalservice.getComs(function (data) {
+      env.commerciaux = data;
+      //console.log(data);
+    });
+
     var dtrdv = "";
     var hrrdv = "";
     if (this.isnew && !this.isrdv) {
@@ -253,6 +269,8 @@ export class FormrdvPage implements OnInit {
       tranchemme: new FormControl(this.client.tranchemme),
       anneeConstr: new FormControl(this.client.anneeConstr),
       nboccupants: new FormControl(this.client.nboccupants),
+      idcomhps2: new FormControl(this.client.idcomhps2),
+      nomcomhps2: new FormControl(this.client.nomcomhps2),
     });
   }
 
@@ -363,6 +381,23 @@ export class FormrdvPage implements OnInit {
     });
   }
 
+  onChange(event) {
+    /*let env = this;
+    this.globalservice.getComs(function (data) {
+      env.commerciaux = data;
+      //console.log(data);
+    });*/
+    this.storage.get("commerciaux").then((user) => {
+      //return callback(user);
+      user.forEach((element) => {
+        if (element._id == event.detail.value) {
+          this.tmpName = element.prenom + " " + element.nom;
+          console.log(this.tmpName);
+        }
+      });
+    });
+  }
+
   onSubmit(values) {
     let env = this;
     /* ORM */
@@ -391,6 +426,10 @@ export class FormrdvPage implements OnInit {
     this.rdv.anneeConstr = values.anneeConstr;
     this.rdv.nboccupants = values.nboccupants;
     this.rdv.aff = "2";
+
+    this.rdv.idcomhps2 = values.idcomhps2;
+    //get list commerciaux
+    this.rdv.nomcomhps2 = this.tmpName;
 
     if (!this.isnew) {
       console.log("formrdv");
