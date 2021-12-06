@@ -80,14 +80,14 @@ export class SchedulerPage implements OnInit {
             // days of week. an array of zero-based day of week integers (0=Sunday)
             daysOfWeek: [1, 2, 3, 4, 5], // Monday - Thursday
             startTime: "13:00", // a start time (10am in this example)
-            endTime: "20:00", // an end time (6pm in this example)
+            endTime: "18:00", // an end time (6pm in this example)
           },
         ],
         events: results2["data"],
         startParam: "start_date",
         endParam: "end_date",
-        slotMinTime: "07:00",
-        slotMaxTime: "20:00",
+        slotMinTime: "08:00",
+        slotMaxTime: "18:00",
         weekNumbers: true,
         hiddenDays: [0],
         droppable: true,
