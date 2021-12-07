@@ -91,27 +91,35 @@ export class SchedulerPage implements OnInit {
         weekNumbers: true,
         hiddenDays: [0],
         droppable: true,
+        dateClick: this.handleDateClick.bind(this),
         eventClick: function (info) {
-          console.log("clk");
+          console.log(info.event);
 
-          let dtn = new Date();
-          let oldt = new Date(info.event._def.extendedProps.dateRdv);
-          // si info.event._def.extendedProps.dateRdv < dtn
+          if (!info.event._def.extendedProps.stick) {
+            let dtn = new Date();
+            let oldt = new Date(info.event._def.extendedProps.dateRdv);
 
-          let navigationExtras: NavigationExtras = {
-            queryParams: {
-              item: JSON.stringify(info.event._def.extendedProps),
-              user: JSON.stringify(env.globalservice.getUser()),
-              from: "/scheduler",
-            },
-          };
-          if (info.event._def.ui.display !== "background") {
-            env.router.navigate(["/formrapport"], navigationExtras);
+            let navigationExtras: NavigationExtras = {
+              queryParams: {
+                item: JSON.stringify(info.event._def.extendedProps),
+                user: JSON.stringify(env.globalservice.getUser()),
+                from: "/scheduler",
+              },
+            };
+            if (info.event._def.ui.display !== "background") {
+              env.router.navigate(["/formrapport"], navigationExtras);
+            } else {
+              console.log("ici");
+              console.log(info.event._def.extendedProps._id);
+              env.presentAlertConfirm(info.event._def.extendedProps._id);
+            }
           } else {
-            console.log(info.event._def.extendedProps._id);
-            env.presentAlertConfirm(info.event._def.extendedProps._id);
+            env.presentAlertComm(
+              info.event.startStr,
+              info.event._def.title,
+              info.event._def.extendedProps._id
+            );
           }
-          //fin si
         },
         eventDrop: function (info) {
           var myobj = info.event._def.extendedProps;
@@ -130,6 +138,54 @@ export class SchedulerPage implements OnInit {
         },
       };
     });
+  }
+
+  handleDateClick(arg) {
+    if (!arg.dateStr.includes("T"))
+      this.presentAlertComm(arg.dateStr, "", null);
+  }
+
+  async presentAlertComm(dateStr, text, mid) {
+    let env = this;
+    const alert = await this.alertCtrl.create({
+      header: "Commentaire",
+      inputs: [
+        {
+          name: "commentaire",
+          placeholder: "Commentaire",
+          value: text,
+          type: "textarea",
+        },
+      ],
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+        },
+        {
+          text: "Confirmer",
+          handler: (data) => {
+            console.log(data);
+            var mmodel = {
+              _id: mid,
+              iduser: this.user._id,
+              title: data.commentaire,
+              allDay: true,
+              start: dateStr,
+              stick: true,
+            };
+            var murl = "https://hps-crm.fr/addobj/commentaires";
+            this.http.post(murl, mmodel).subscribe((results2) => {
+              console.log(results2);
+              env.synchro();
+            });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 
   async presentAlertConfirm(id) {

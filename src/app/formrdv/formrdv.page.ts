@@ -477,4 +477,38 @@ export class FormrdvPage implements OnInit {
       });
     }
   }
+  onChangeDT(e) {
+    console.log(this.validations_form.controls["dateRdv"].value);
+    var jr = this.validations_form.controls["dateRdv"].value;
+    var hr = this.validations_form.controls["heureRDV"].value;
+    var dt = jr.split("T");
+    dt = dt[0];
+    dt = dt.split("-");
+    var ht = hr.split("T");
+    ht = ht[1];
+    ht = ht.split(":");
+    var tst = new Date(dt[0], parseInt(dt[1]) - 1, dt[2], ht[0], ht[1]);
+    console.log(this.user);
+    this.http
+      .get("https://hps-crm.fr/restobj/" + this.user._id + "/all")
+      .subscribe((data: any) => {
+        let mdata = [];
+        mdata = data.data;
+        var flag = 0;
+        var today = new Date();
+        mdata.forEach((elm) => {
+          var ndt = new Date(elm.start);
+          var nft = new Date(elm.start);
+          nft.setMinutes(nft.getMinutes() + 59);
+          //if (ndt > today) {
+          console.log(ndt);
+          if (tst >= ndt && tst <= nft) flag = 1;
+          //} else flag = 1;
+        });
+        if (flag) {
+          alert("Date non disponible");
+          this.validations_form.controls["heureRDV"].setValue("");
+        }
+      });
+  }
 }
