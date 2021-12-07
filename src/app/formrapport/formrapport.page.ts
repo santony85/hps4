@@ -207,12 +207,12 @@ export class FormrapportPage implements OnInit {
         this.nomC1 = this.client.nomcomhps1;
         this.nomC2 = this.client.nomcomhps2;
         /* /ORM */
-        console.log(this.rdv.produits);
+        //console.log(this.rdv.produits);
         let env = this;
         if (this.rdv.issue == "VENTE") {
           this.affVente = 1;
           this.rdv.produits.forEach((elm) => {
-            console.log(elm);
+            //console.log(elm);
             let mprod = elm;
             mprod.qte = elm.qte;
             mprod.prix = elm.prix;
@@ -328,7 +328,7 @@ export class FormrapportPage implements OnInit {
 
         let montant = 0;
         this.listprod.forEach((element) => {
-          console.log(element);
+          //console.log(element);
           var prix = parseFloat(element.prix);
           var qte = parseInt(element.qte);
           montant += prix * qte;
@@ -352,7 +352,7 @@ export class FormrapportPage implements OnInit {
 
     this.globalservice.getIssues((data) => {
       this.issues = data;
-      console.log(data);
+      //console.log(data);
     });
 
     if (env.isnew && !env.isrdv) {
@@ -363,14 +363,14 @@ export class FormrapportPage implements OnInit {
 
     var dt = new Date();
     dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 22, 0);
-    console.log(dt);
+    //console.log(dt);
 
     var de = new Date(env.client.dateRdv);
     de = new Date(de.getFullYear(), de.getMonth(), de.getDate(), 10, 0);
-    console.log(de);
+    //console.log(de);
 
     if (de > dt) {
-      console.log("rdv plus tard");
+      //console.log("rdv plus tard");
       this.isEnabled = 1;
     } else console.log("rdv ok");
 
@@ -535,7 +535,7 @@ export class FormrapportPage implements OnInit {
     if (this.affRepo == 1) {
       this.rdv.status = "relance";
 
-      console.log(this.dateH);
+      //console.log(this.dateH);
       var dt = new Date(
         this.dateH.getFullYear(),
         this.dateH.getMonth(),
@@ -543,7 +543,7 @@ export class FormrapportPage implements OnInit {
         0,
         0
       );
-      console.log(dt);
+      //console.log(dt);
       this.rdv.daterelance = dt;
     } else this.rdv.status = "rapport";
     this.rdv.DateSign = this.rdv.dateRdv;
@@ -601,13 +601,13 @@ export class FormrapportPage implements OnInit {
     let tmpn = new Date();
 
     tmpn = new Date(tmpn.getFullYear(), tmpn.getMonth(), 1);
-    console.log(tmpn);
+    //console.log(tmpn);
 
     if (tmpd >= tmpn) {
       this.dateH = tmpd;
       this.textMounth =
         this.mois[this.dateH.getMonth()] + " " + this.dateH.getFullYear();
-      console.log(this.dateH);
+      //console.log(this.dateH);
     }
 
     //2021-10-12T08:39:38.828Z
@@ -615,7 +615,7 @@ export class FormrapportPage implements OnInit {
     //console.log(tmp);
   }
   incm() {
-    console.log(this.dateH);
+    //console.log(this.dateH);
     this.dateH = new Date(this.dateH.setMonth(this.dateH.getMonth() + 1));
 
     this.textMounth =

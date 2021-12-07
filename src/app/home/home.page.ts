@@ -70,7 +70,7 @@ export class HomePage {
 
     env.globalservice.newSynchro().then((vals) => {
       env.globalservice.getNbRdv().then((data) => {
-        console.log(data);
+        //console.log(data);
         env.rdv = data["data"];
         env.maj = data["maj"];
         env.segmentModel = "rdv";

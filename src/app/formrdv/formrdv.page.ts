@@ -91,7 +91,7 @@ export class FormrdvPage implements OnInit {
   ) {
     this.route.queryParams.subscribe((params) => {
       this.user = JSON.parse(params.user);
-      console.log(this.user);
+      //console.log(this.user);
       if (params.item !== "null") {
         this.rdv = JSON.parse(params.item);
         this.isrdv = true;
@@ -392,7 +392,7 @@ export class FormrdvPage implements OnInit {
       user.forEach((element) => {
         if (element._id == event.detail.value) {
           this.tmpName = element.prenom + " " + element.nom;
-          console.log(this.tmpName);
+          //console.log(this.tmpName);
         }
       });
     });
@@ -440,7 +440,7 @@ export class FormrdvPage implements OnInit {
 
       var murl = "https://hps-crm.fr/addobj/newhpsrdv";
       this.http.post(murl, this.rdv).subscribe((results2) => {
-        console.log(results2);
+        //console.log(results2);
         env.router.navigate(["/home"]);
       });
     } else {
@@ -478,7 +478,7 @@ export class FormrdvPage implements OnInit {
     }
   }
   onChangeDT(e) {
-    console.log(this.validations_form.controls["dateRdv"].value);
+    //console.log(this.validations_form.controls["dateRdv"].value);
     var jr = this.validations_form.controls["dateRdv"].value;
     var hr = this.validations_form.controls["heureRDV"].value;
     var dt = jr.split("T");
@@ -488,7 +488,7 @@ export class FormrdvPage implements OnInit {
     ht = ht[1];
     ht = ht.split(":");
     var tst = new Date(dt[0], parseInt(dt[1]) - 1, dt[2], ht[0], ht[1]);
-    console.log(this.user);
+    //console.log(this.user);
     this.http
       .get("https://hps-crm.fr/restobj/" + this.user._id + "/all")
       .subscribe((data: any) => {
@@ -501,7 +501,7 @@ export class FormrdvPage implements OnInit {
           var nft = new Date(elm.start);
           nft.setMinutes(nft.getMinutes() + 59);
           //if (ndt > today) {
-          console.log(ndt);
+          //console.log(ndt);
           if (tst >= ndt && tst <= nft) flag = 1;
           //} else flag = 1;
         });

@@ -43,7 +43,7 @@ export class AppComponent {
   }
 
   deconnect() {
-    this.storage.set("user", null);
+    this.storage.remove("user");
     this.router.navigate(["/login"]);
   }
 

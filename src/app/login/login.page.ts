@@ -31,7 +31,6 @@ export class LoginPage implements OnInit {
     });
 
     this.storage.get("user").then((data) => {
-      //console.log(data)
       if (data) this.router.navigate(["/home"]);
     });
   }
@@ -48,6 +47,7 @@ export class LoginPage implements OnInit {
   ngOnInit() {}
 
   login() {
+    console.log("ici");
     let env = this;
     var murl =
       "https://hps-crm.fr/loginapp/commerciaux/" +

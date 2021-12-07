@@ -36,7 +36,7 @@ export class SchedulerPage implements OnInit {
   ngOnInit() {}
 
   ionViewWillEnter() {
-    console.log(this.user);
+    //console.log(this.user);
     forwardRef(() => Calendar);
     this.synchro();
   }
@@ -93,7 +93,7 @@ export class SchedulerPage implements OnInit {
         droppable: true,
         dateClick: this.handleDateClick.bind(this),
         eventClick: function (info) {
-          console.log(info.event);
+          //console.log(info.event);
 
           if (!info.event._def.extendedProps.stick) {
             let dtn = new Date();
@@ -109,8 +109,8 @@ export class SchedulerPage implements OnInit {
             if (info.event._def.ui.display !== "background") {
               env.router.navigate(["/formrapport"], navigationExtras);
             } else {
-              console.log("ici");
-              console.log(info.event._def.extendedProps._id);
+              //console.log("ici");
+              //console.log(info.event._def.extendedProps._id);
               env.presentAlertConfirm(info.event._def.extendedProps._id);
             }
           } else {
@@ -164,9 +164,22 @@ export class SchedulerPage implements OnInit {
           cssClass: "secondary",
         },
         {
+          text: "Supprimer",
+          handler: () => {
+            //delete
+            var murl = "https://hps-crm.fr/delobj/commentaires/" + mid;
+            this.http
+              .get(murl, { responseType: "text" })
+              .subscribe((results2) => {
+                //reload page
+                env.synchro();
+              });
+          },
+        },
+        {
           text: "Confirmer",
           handler: (data) => {
-            console.log(data);
+            //console.log(data);
             var mmodel = {
               _id: mid,
               iduser: this.user._id,
@@ -177,7 +190,7 @@ export class SchedulerPage implements OnInit {
             };
             var murl = "https://hps-crm.fr/addobj/commentaires";
             this.http.post(murl, mmodel).subscribe((results2) => {
-              console.log(results2);
+              //console.log(results2);
               env.synchro();
             });
           },

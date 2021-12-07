@@ -153,7 +153,7 @@ export class GlobalService {
     return new Promise((resolve) => {
       this.storage.get("user").then((user) => {
         var murl = "https://hps-crm.fr/restobj/" + user._id + "/all";
-        console.log(murl);
+        //console.log(murl);
         env.http.get(murl).subscribe((results2) => {
           let data = {
             maj: new Date(),
@@ -174,7 +174,7 @@ export class GlobalService {
             return a.dateDiff - b.dateDiff;
           });
           data["data"] = tmpLst;
-          console.log(data["data"]);
+          //console.log(data["data"]);
           env.storage.set("rdv", data);
           resolve(data);
         });
@@ -315,7 +315,7 @@ export class GlobalService {
   }
   /**************/
   public getNbRapports() {
-    console.log("ici et la");
+    //console.log("ici et la");
     return new Promise((resolve) => {
       let lstret: any = [];
       this.getRdv().then((data) => {
@@ -429,7 +429,7 @@ export class GlobalService {
     //console.log("ici")
     var murl = "https://hps-crm.fr/list/newhpsusers";
     this.http.get(murl).subscribe((results) => {
-      console.log(results);
+      //console.log(results);
       this.storage.set("commerciaux", results);
     });
   }
@@ -508,7 +508,7 @@ export class GlobalService {
           "/" +
           d2 +
           "/0";
-        console.log(murl);
+        //console.log(murl);
         this.http.get(murl).subscribe((datas) => {
           var results: any = [];
           results = datas;

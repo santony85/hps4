@@ -13,7 +13,6 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/cli": "~12.2.13",
     "@angular/common": "~12.2.14",
     "@angular/core": "~12.2.14",
     "@angular/forms": "~12.2.14",
@@ -77,6 +76,7 @@
     "rxjs": "~6.5.5",
     "rxjs-compat": "^6.6.3",
     "tslib": "^2.2.0",
+    "webpack-dev-server": "^3.11.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
