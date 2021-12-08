@@ -23,6 +23,8 @@ import { Api } from "../providers/api";
 import { GlobalService } from "../global.service";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { LoadingController } from "@ionic/angular";
+import { AlertController } from "@ionic/angular";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 
 @Component({
   selector: "app-formrapport",
@@ -137,7 +139,9 @@ export class FormrapportPage implements OnInit {
     public globalservice: GlobalService,
     private geolocation: Geolocation,
     public loadingController: LoadingController,
-    public api: Api
+    public api: Api,
+    private http: HttpClient,
+    private alertController: AlertController
   ) {
     this.dateH = new Date();
     this.dateH = new Date(this.dateH.getFullYear(), this.dateH.getMonth(), 1);
@@ -593,6 +597,39 @@ export class FormrapportPage implements OnInit {
         //});
       });
     }
+  }
+
+  async deleteRDV() {
+    const alert = await this.alertController.create({
+      header: "Attention !!!",
+      message: "Suppression",
+      buttons: [
+        {
+          text: "Annuler",
+          role: "cancel",
+          cssClass: "secondary",
+          handler: (blah) => {
+            console.log("Confirm Cancel: blah");
+          },
+        },
+        {
+          text: "Confirmer",
+          handler: () => {
+            //console.log("Confirm Okay");
+            var murl = "https://hps-crm.fr/delobj/newhpsrdv/" + this.rdv._id;
+            this.http
+              .get(murl, { responseType: "text" })
+              .subscribe((results2) => {
+                this.router.navigate(["/home"]);
+              });
+          },
+        },
+      ],
+    });
+
+    await alert.present();
+    //delobj
+    //reload home
   }
 
   decm() {
