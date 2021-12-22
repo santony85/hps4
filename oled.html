@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body style="font-family:monospace;font-size: 10px;line-height: 6px;">
+    <div id="mcanv" style="width: 130px;height: 66px; border: 1px solid black;"></div>
+    <button onclick="convert()">Convertir</button>
+    <img id = "imgCapture" alt = "" style = "display:none;border:1px solid #ccc" />
+    <div id="resout"></div>
+</br>
+    <div id="resoutbin"></div>
+    <script>
+
+
+// create canvas element and append it to document body
+var canvas = document.createElement('canvas');
+var mdiv = document.getElementById("mcanv");
+mdiv.appendChild(canvas);
+
+// some hotfixes... ( ≖_≖)
+document.body.style.margin = 0;
+canvas.style.position = 'fixed';
+
+// get canvas 2D context and set him correct size
+var ctx = canvas.getContext('2d');
+resize();
+
+// last known position
+var pos = { x: 0, y: 0 };
+
+window.addEventListener('resize', resize);
+document.addEventListener('mousemove', draw);
+document.addEventListener('mousedown', setPosition);
+document.addEventListener('mouseenter', setPosition);
+
+const centerX = canvas.width / 2;
+const centerY = canvas.height / 2;
+const radius = 20;
+
+/*ctx.beginPath();
+ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI, false);
+ctx.fillStyle = '#000000';
+ctx.fill();
+ctx.lineWidth = 1;
+ctx.strokeStyle = '#000000';
+ctx.stroke();
+
+ctx.beginPath();
+ctx.arc(0, 0, radius, 0, 2 * Math.PI, false);
+ctx.fillStyle = '#000000';
+ctx.fill();
+ctx.lineWidth = 1;
+ctx.strokeStyle = '#000000';
+ctx.stroke();*/
+
+var imgData;
+
+
+
+function getPixel(imgData, index) {
+  var i = index*4, d = imgData.data
+  var r=0;
+  if(d[i+3]>0)r=1;
+  return r;
+}
+
+// AND/OR
+
+function getPixelXY(imgData, x, y) {
+  return getPixel(imgData, y*imgData.width+x)
+}
+
+
+let arr = new Array(64);
+for (var i = 0; i < 64; i++) {
+  arr[i] = new Array(128); // make each element an array
+}
+
+
+        function convert(){
+            imgData = ctx.getImageData(0,0,canvas.width,canvas.height)   
+            var txtres="";
+            for(var i=0;i<64;i++){
+               for(var j=0;j<128;j++){
+                txtres += getPixelXY(imgData, j, i );
+                arr[i][j]=getPixelXY(imgData, j, i )
+               } 
+               txtres += "\r\n";
+            }
+            //document.getElementById("resout").innerHTML = txtres;
+            txtres="";
+            for(var i=0;i<64;i++){
+                
+               //10
+               for(var j=0;j<16;j++){
+                 txtres += ",B";
+                 //3  
+                 for(z=7;z>-1;z--){
+                   //1  
+                   txtres += arr[i][((j*8)+z)];
+                   console.log(i,j,z,((j*8)+z))
+                 }
+                 //lire par 8 et inverse
+               } 
+               txtres += "\r\n";
+            }
+            txtres +=","
+            txtres = txtres.substring(1)
+            document.getElementById("resoutbin").innerHTML = txtres;
+            //window.prompt("Copy to clipboard: Ctrl+C, Enter", txtres);
+
+        }
+
+// new position from mouse event
+function setPosition(e) {
+  pos.x = e.clientX;
+  pos.y = e.clientY;
+}
+
+// resize canvas
+function resize() {
+  ctx.canvas.width = 128;
+  ctx.canvas.height = 64;
+}
+
+function draw(e) {
+  // mouse left button must be pressed
+  if (e.buttons !== 1) return;
+
+  ctx.beginPath(); // begin
+
+  ctx.lineWidth = 1;
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#000000';
+
+  ctx.moveTo(pos.x, pos.y); // from
+  setPosition(e);
+  ctx.lineTo(pos.x, pos.y); // to
+
+  ctx.stroke(); // draw it!
+}
+    </script>
+</body>
+</html>
